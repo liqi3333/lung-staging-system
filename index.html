@@ -614,14 +614,14 @@
       zh: {
         langButton: 'English',
         printButton: '打印当前页',
-        heroBadge: '🫁 正式临床辅助版 · 双语一键切换',
-        heroTitle: '肺癌分期系统（正式双语版）',
-        heroSubtitle: '本正式版用于肺癌分期辅助判读与路径梳理：内置中文 / English 一键切换，区分 NSCLC（非小细胞肺癌）与 SCLC（小细胞肺癌）双页面，可自动生成 T / N / M 与总分期，并提供分阶段治疗路径与随访建议。当前分期主逻辑基于 IASLC（国际肺癌研究协会）/ AJCC（美国癌症联合委员会）第8版肺癌 TNM（肿瘤-淋巴结-转移）分期，临床建议参考 NCCN、CSCO 与中华医学会近年更新思路，用于正式临床辅助、教学与流程设计。',
+        heroBadge: '🫁 核校更新版 · TNM第9版 · 双语一键切换',
+        heroTitle: '肺癌分期与治疗随访建议系统（核校更新版）',
+        heroSubtitle: '本核校更新版用于肺癌分期辅助判读、治疗路径梳理与随访节奏提示：内置中文 / English 一键切换，区分 NSCLC（非小细胞肺癌）与 SCLC（小细胞肺癌）双页面。分期主逻辑已由第8版升级为 IASLC / UICC / AJCC 第9版肺癌 TNM（2025 起实施），纳入 N2a / N2b 与 M1c1 / M1c2，并同步更新 NSCLC 与 SCLC 近年指南中的关键治疗和随访要点。本工具仍仅供临床参考、教学与流程设计，不替代 MDT（多学科团队）和正式诊疗决策。',
         infoCards: [
           { title: '双语模式', body: '支持中英文一键切换，便于门诊沟通、教学展示与国际交流。' },
-          { title: '自动分期', body: '输入肿瘤大小、侵犯特征、N（淋巴结）、M（远处转移）后，自动生成 TNM 与总分期。' },
-          { title: '正式路径', body: '按早期、局晚期、晚期分别给出较完整的治疗路径建议，不再只停留在分期结果。' },
-          { title: '正式随访', body: '纳入术后、局晚期治疗后、晚期系统治疗中，以及 SCLC 特殊场景下的正式随访建议。' }
+          { title: 'TNM 第9版', body: '输入肿瘤大小、侵犯特征、N2a/N2b 与 M1c1/M1c2 后，自动生成第9版 TNM 与总分期。' },
+          { title: '更新路径', body: '按早期、围术期、不可切除局晚期、晚期分别给出治疗路径提示，并强调分子检测与 MDT。' },
+          { title: '更新随访', body: '纳入根治治疗后 CT 随访、系统治疗中疗效评估，以及 SCLC 常规脑 MRI 监测。' }
         ],
         tabNsclc: 'NSCLC 页面（非小细胞肺癌）',
         tabSclc: 'SCLC 页面（小细胞肺癌）',
@@ -645,7 +645,7 @@
         metricResect: '切除性',
         scMetricSimple: '简化分期（局限期/广泛期）',
         refsTitle: '参考依据（用于系统设计，不替代正式指南全文）',
-        footerText: '说明：本工具用于临床辅助判断、教学与流程设计，不替代 MDT（多学科团队）讨论、影像判读、病理结论或正式临床决策。',
+        footerText: '说明：本工具为核校更新后的临床参考、教学与流程设计工具，不替代 MDT（多学科团队）讨论、影像判读、病理结论、患者意愿评估或正式临床决策。',
         sectionTitles: {
           basic: '一、基础设置',
           tnm: '二、TNM 关键字段',
@@ -654,8 +654,8 @@
         nsSummary: (basis, t, n, m, stage) => `${basis} · NSCLC（非小细胞肺癌）· 自动生成 <strong>${t}${n}${m}</strong>，当前总分期为 <strong>${stage}</strong>。`,
         scSummary: (basis, t, n, m, stage, simple) => `${basis} · SCLC（小细胞肺癌）· 自动生成 <strong>${t}${n}${m}</strong>，TNM 总分期为 <strong>${stage}</strong>，简化输出为 <strong>${simple}</strong>。`,
         tReasonTitle: 'T 分期计算说明：',
-        nsUpgradeNote: '分期说明：当前总分期基于第8版肺癌 TNM 规则自动生成；如后续正式切换第9版，可继续纳入新的 N2 / M 细分与分期重排。',
-        scUpgradeNote: 'SCLC 说明：本正式版已采用 TNM + 局限期/广泛期双轨输出；其中 M0 且胸部放疗野可完整包容全部病灶者更倾向局限期，M1 或放疗野无法完整包容者更倾向广泛期，最终仍需结合影像范围、放疗计划可行性与 MDT（多学科团队）结论综合判断。',
+        nsUpgradeNote: '分期说明：当前总分期基于 IASLC / UICC / AJCC 第9版肺癌 TNM 规则自动生成；已纳入 N2a / N2b 与 M1c1 / M1c2。若 N2 站数或远处转移器官系统数尚未明确，需先完善影像、PET-CT、脑 MRI 和/或病理取样后再用于决策。',
+        scUpgradeNote: 'SCLC 说明：本核校版采用 TNM 第9版 + 局限期/广泛期双轨输出。M0 且胸部放疗野可完整包容全部病灶者更倾向局限期；M1 或放疗野无法完整包容者更倾向广泛期。SCLC 常规应完成脑 MRI（优先）或增强头颅 CT，最终仍需结合影像范围、放疗计划可行性与 MDT 结论。',
         planTitle: '正式治疗路径建议',
         followTitle: '正式随访建议',
         severityLabels: {
@@ -676,14 +676,14 @@
       en: {
         langButton: '中文',
         printButton: 'Print current page',
-        heroBadge: '🫁 Production Version · One-Click Bilingual Switch',
-        heroTitle: 'Lung Cancer Staging System (Production Bilingual Edition)',
-        heroSubtitle: 'This is a directly usable production HTML release with one-click Chinese / English switching, separate NSCLC and SCLC pages, automatic T / N / M plus stage grouping, and built-in guidance for surgery, chemoradiotherapy, targeted therapy, immunotherapy, and follow-up. The current staging engine is primarily based on the stable IASLC / AJCC 8th edition lung TNM framework, with upgrade room reserved for the 9th edition.',
+        heroBadge: '🫁 Reviewed Update · TNM 9th Edition · Bilingual Switch',
+        heroTitle: 'Lung Cancer Staging, Treatment and Follow-Up System (Reviewed Update)',
+        heroSubtitle: 'This reviewed update provides bilingual NSCLC and SCLC pages for TNM staging support, treatment pathway organization, and follow-up rhythm prompts. The staging engine has been upgraded from the 8th edition to the IASLC / UICC / AJCC 9th edition lung TNM framework effective from 2025, including N2a / N2b and M1c1 / M1c2. It also reflects recent NSCLC and SCLC guideline updates. This tool remains a clinical reference and teaching aid only, and does not replace MDT review or formal clinical decision-making.',
         infoCards: [
           { title: 'Bilingual Mode', body: 'One-click Chinese / English switching for clinic demonstrations, teaching, and international communication.' },
-          { title: 'Auto Staging', body: 'Enter tumor size, invasion features, N, and M to automatically generate TNM and stage grouping.' },
-          { title: 'Clinical Pathways', body: 'The output goes beyond stage labels and suggests early-stage, locally advanced, and metastatic treatment directions.' },
-          { title: 'Follow-Up', body: 'Includes follow-up rhythm suggestions after surgery, after locally advanced treatment, and during systemic therapy.' }
+          { title: 'TNM 9th Edition', body: 'Enter tumor size, invasion features, N2a/N2b, and M1c1/M1c2 to generate TNM 9th edition stage grouping.' },
+          { title: 'Updated Pathways', body: 'Outputs treatment prompts for early, perioperative, unresectable locally advanced, and metastatic settings.' },
+          { title: 'Updated Follow-Up', body: 'Includes CT surveillance after curative-intent therapy, on-treatment response assessment, and routine brain MRI monitoring in SCLC.' }
         ],
         tabNsclc: 'NSCLC Page',
         tabSclc: 'SCLC Page',
@@ -707,7 +707,7 @@
         metricResect: 'Resectability',
         scMetricSimple: 'Simple Stage',
         refsTitle: 'References (for system design, not a substitute for full official guidelines)',
-        footerText: 'Note: This tool is intended for clinical support, teaching, and workflow design. It does not replace MDT discussion, imaging interpretation, pathology conclusions, or formal clinical decision-making.',
+        footerText: 'Note: This reviewed tool is intended for clinical reference, teaching, and workflow design only. It does not replace MDT discussion, imaging interpretation, pathology conclusions, patient preference assessment, or formal clinical decision-making.',
         sectionTitles: {
           basic: '1. Basic Settings',
           tnm: '2. Key TNM Inputs',
@@ -716,8 +716,8 @@
         nsSummary: (basis, t, n, m, stage) => `${basis} · NSCLC · Automatically generated <strong>${t}${n}${m}</strong>, with current overall stage <strong>${stage}</strong>.`,
         scSummary: (basis, t, n, m, stage, simple) => `${basis} · SCLC · Automatically generated <strong>${t}${n}${m}</strong>, TNM stage <strong>${stage}</strong>, and simple clinical output <strong>${simple}</strong>.`,
         tReasonTitle: 'How T was generated:',
-        nsUpgradeNote: '9th edition upgrade slot: future versions can add the new N2 / M subdivisions and stage regrouping from the 9th edition proposal.',
-        scUpgradeNote: 'SCLC note: the production path should continue to preserve dual output using both TNM and limited-stage / extensive-stage classification.',
+        nsUpgradeNote: 'Staging note: stage grouping is generated using the IASLC / UICC / AJCC 9th edition lung TNM rules, including N2a / N2b and M1c1 / M1c2. If N2 station count or metastatic organ-system count is unclear, complete staging workup before decision-making.',
+        scUpgradeNote: 'SCLC note: this reviewed version preserves dual output using TNM 9th edition and limited-stage / extensive-stage classification. Brain MRI is preferred for staging and surveillance when feasible.',
         planTitle: 'Treatment Pathway Suggestion',
         followTitle: 'Follow-Up Suggestion',
         severityLabels: {
@@ -738,12 +738,14 @@
     };
 
     const REFERENCES = [
-      { zh: 'IASLC（国际肺癌研究协会）/ AJCC（美国癌症联合委员会）第8版肺癌分期基础', en: 'IASLC / AJCC 8th edition lung staging foundation', url: 'https://pubmed.ncbi.nlm.nih.gov/27780786/' },
-      { zh: '第9版肺癌 TNM（肿瘤-淋巴结-转移）提案', en: 'Proposed 9th edition TNM classification for lung cancer', url: 'https://pubmed.ncbi.nlm.nih.gov/38885896/' },
-      { zh: 'NCCN（美国国家综合癌症网络）NSCLC 指南更新 Version 7.2025', en: 'NCCN Guidelines Insights: NSCLC Version 7.2025', url: 'https://pubmed.ncbi.nlm.nih.gov/40930154/' },
-      { zh: 'CSCO（中国临床肿瘤学会）2024 NSCLC 晚期更新', en: 'CSCO 2024 advanced NSCLC update', url: 'https://pubmed.ncbi.nlm.nih.gov/39995197/' },
-      { zh: 'CSCO（中国临床肿瘤学会）2024 NSCLC 早期 / 局晚期更新', en: 'CSCO 2024 early / locally advanced NSCLC update', url: 'https://pubmed.ncbi.nlm.nih.gov/39995198/' },
-      { zh: '中华医学会肺癌临床诊疗指南（2025版）', en: 'Chinese Medical Association guideline for lung cancer (2025 edition)', url: 'https://pubmed.ncbi.nlm.nih.gov/40796288/' }
+      { zh: 'IASLC / UICC / AJCC 第9版肺癌 TNM 分期（2025 起实施）', en: 'IASLC / UICC / AJCC 9th edition lung TNM staging, effective 2025', url: 'https://radiologyassistant.nl/chest/lung-cancer/tnm-classification-8th-edition-1' },
+      { zh: 'IASLC 第9版肺癌分期参考卡（N2a/N2b、M1c1/M1c2 与分期分组）', en: 'IASLC 9th edition lung cancer staging reference cards', url: 'https://www.lungecancer.dk/wp-content/uploads/2024/12/IASLC-Staging-Cards-9th-Ed.-2024-Lung-Cancer-incl-lipidic-SKS-koder.pdf' },
+      { zh: 'NCCN NSCLC 2026 更新页面 / Evidence Blocks', en: 'NCCN NSCLC 2026 updates / Evidence Blocks', url: 'https://www.nccn.org/guidelines/guidelines-detail?category=1&id=1450' },
+      { zh: 'NCCN SCLC Version 2.2026 更新页面', en: 'NCCN SCLC Version 2.2026 update page', url: 'https://www.nccn.org/guidelines/guidelines-detail?category=1&id=1462' },
+      { zh: 'ASCO 肺癌根治意图治疗后随访建议', en: 'ASCO surveillance after definitive curative-intent lung cancer therapy', url: 'https://ascopubs.org/doi/pdf/10.1200/JCO.19.02748' },
+      { zh: 'FDA：EGFR 突变不可切除 III 期 NSCLC 放化疗后奥希替尼', en: 'FDA: osimertinib after chemoradiation for unresectable stage III EGFR-mutated NSCLC', url: 'https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-osimertinib-locally-advanced-unresectable-stage-iii-non-small-cell-lung-cancer' },
+      { zh: 'FDA / ASCO：局限期 SCLC 放化疗后 durvalumab 巩固治疗', en: 'FDA / ASCO: durvalumab after chemoradiation for limited-stage SCLC', url: 'https://www.fda.gov/drugs/resources-information-approved-drugs/fda-approves-durvalumab-limited-stage-small-cell-lung-cancer' },
+      { zh: 'ASCO：广泛期 SCLC 一线含铂依托泊苷联合免疫治疗', en: 'ASCO: platinum-etoposide plus immunotherapy for extensive-stage SCLC', url: 'https://www.guidelinecentral.com/guideline/3279937/' }
     ];
 
     const SIZE_OPTIONS = [
@@ -805,30 +807,32 @@
       {
         key: 'tnm',
         fields: [
-          { id: 'size', type: 'select', label: { zh: '肿瘤最大直径（按 T 分期下拉选择）', en: 'Tumor maximum diameter (T-based dropdown)' }, options: SIZE_OPTIONS, hint: { zh: 'T 分期核心先按肿瘤最大直径分层：T1a ≤1 cm，T1b >1–2 cm，T1c >2–3 cm，T2a >3–4 cm，T2b >4–5 cm，T3 >5–7 cm，T4 >7 cm；若存在更高级别侵犯特征，则按更高 T 分期计算。', en: 'The T descriptor is first grouped by tumor size, then upgraded when higher-level invasion features are present.' } },
+          { id: 'size', type: 'select', label: { zh: '肿瘤最大直径（按 T 分期下拉选择）', en: 'Tumor maximum diameter (T-based dropdown)' }, options: SIZE_OPTIONS, hint: { zh: '第9版中 T 描述符总体沿用第8版：T1a ≤1 cm，T1b >1–2 cm，T1c >2–3 cm，T2a >3–4 cm或符合T2a侵犯特征，T2b >4–5 cm，T3 >5–7 cm或符合T3侵犯特征，T4 >7 cm或符合T4侵犯特征。', en: 'In the 9th edition, T descriptors are largely unchanged from the 8th edition; size-based T is upgraded when higher-level invasion features are present.' } },
           { id: 't2', type: 'select', label: { zh: 'T2 升级特征（局部进展）', en: 'T2-upgrading feature' }, options: [
             { value: 'none', zh: '无明确 T2 特征', en: 'No clear T2 feature' },
-            { value: 'T2', zh: '脏层胸膜 / 主支气管 / 肺不张（T2）', en: 'Visceral pleura / main bronchus / atelectasis (T2)' }
+            { value: 'T2', zh: '脏层胸膜 / 邻近肺叶 / 主支气管 / 肺不张（T2a）', en: 'Visceral pleura / adjacent lobe / main bronchus / atelectasis (T2a)' }
           ]},
           { id: 't3', type: 'select', label: { zh: 'T3 升级特征（局部侵犯）', en: 'T3-upgrading feature' }, full: true, options: [
             { value: 'none', zh: '无明确 T3 特征', en: 'No clear T3 feature' },
-            { value: 'T3', zh: '胸壁 / 壁层心包 / 膈神经受侵，或同肺叶结节（T3）', en: 'Chest wall / parietal pericardium / phrenic nerve invasion, or same-lobe nodule (T3)' }
+            { value: 'T3', zh: '胸壁 / 壁层心包 / 膈神经 / 奇静脉 / 胸神经根受侵，或同肺叶结节（T3）', en: 'Chest wall / parietal pericardium / phrenic nerve / azygos vein / thoracic nerve root invasion, or same-lobe nodule (T3)' }
           ]},
           { id: 't4', type: 'select', label: { zh: 'T4 升级特征（高级别局部侵犯）', en: 'T4-upgrading feature' }, full: true, options: [
             { value: 'none', zh: '无明确 T4 特征', en: 'No clear T4 feature' },
-            { value: 'T4', zh: '纵隔 / 大血管 / 气管 / 隆突 / 食管 / 椎体 / 同侧不同肺叶结节（T4）', en: 'Mediastinum / great vessels / trachea / carina / esophagus / vertebral body / different ipsilateral lobe nodule (T4)' }
+            { value: 'T4', zh: '纵隔 / 大血管 / 气管 / 隆突 / 返喉神经 / 食管 / 膈肌 / 椎体 / 同侧不同肺叶结节（T4）', en: 'Mediastinum / great vessels / trachea / carina / recurrent laryngeal nerve / esophagus / diaphragm / vertebral body / different ipsilateral lobe nodule (T4)' }
           ]},
           { id: 'n', type: 'select', label: { zh: 'N 分期（淋巴结转移）', en: 'N descriptor' }, options: [
             { value: 'N0', zh: 'N0（无区域淋巴结转移）', en: 'N0 (no regional nodal metastasis)' },
             { value: 'N1', zh: 'N1（同侧肺门 / 肺内 / 支气管旁淋巴结转移）', en: 'N1 (ipsilateral hilar / intrapulmonary / peribronchial nodes)' },
-            { value: 'N2', zh: 'N2（同侧纵隔 / 隆突下淋巴结转移）', en: 'N2 (ipsilateral mediastinal / subcarinal nodes)' },
-            { value: 'N3', zh: 'N3（对侧纵隔 / 锁骨上等淋巴结转移）', en: 'N3 (contralateral mediastinal / supraclavicular etc.)' }
+            { value: 'N2a', zh: 'N2a（单站同侧纵隔 / 隆突下淋巴结转移）', en: 'N2a (single ipsilateral mediastinal / subcarinal station)' },
+            { value: 'N2b', zh: 'N2b（多站同侧纵隔 / 隆突下淋巴结转移）', en: 'N2b (multiple ipsilateral mediastinal / subcarinal stations)' },
+            { value: 'N3', zh: 'N3（对侧纵隔 / 对侧肺门 / 锁骨上等淋巴结转移）', en: 'N3 (contralateral mediastinal / hilar / supraclavicular etc.)' }
           ]},
           { id: 'm', type: 'select', label: { zh: 'M 分期（远处转移）', en: 'M descriptor' }, options: [
             { value: 'M0', zh: 'M0（无远处转移）', en: 'M0 (no distant metastasis)' },
-            { value: 'M1a', zh: 'M1a（胸膜结节 / 恶性胸腔积液 / 对侧肺结节）', en: 'M1a (pleural nodules / malignant effusion / contralateral pulmonary nodule)' },
-            { value: 'M1b', zh: 'M1b（单发胸外转移）', en: 'M1b (single extrathoracic metastasis)' },
-            { value: 'M1c', zh: 'M1c（多发胸外转移）', en: 'M1c (multiple extrathoracic metastases)' }
+            { value: 'M1a', zh: 'M1a（胸膜/心包结节或恶性积液、对侧肺结节）', en: 'M1a (pleural/pericardial nodules or effusion, contralateral pulmonary nodule)' },
+            { value: 'M1b', zh: 'M1b（单发胸外转移，单一器官系统）', en: 'M1b (single extrathoracic metastasis in one organ system)' },
+            { value: 'M1c1', zh: 'M1c1（单一器官系统内多发胸外转移）', en: 'M1c1 (multiple extrathoracic metastases in one organ system)' },
+            { value: 'M1c2', zh: 'M1c2（多个器官系统胸外转移）', en: 'M1c2 (multiple extrathoracic metastases in multiple organ systems)' }
           ]}
         ]
       },
@@ -837,13 +841,18 @@
         fields: [
           { id: 'driver', type: 'select', label: { zh: '驱动基因状态（靶向相关）', en: 'Driver alteration status' }, options: [
             { value: 'pending', zh: '待完善 / 未完成检测', en: 'Pending / not yet completed' },
-            { value: 'EGFR', zh: 'EGFR 突变（表皮生长因子受体）', en: 'EGFR mutation' },
+            { value: 'EGFR', zh: 'EGFR 敏感突变（含 exon19del / L858R）', en: 'EGFR sensitizing mutation (including exon19del / L858R)' },
+            { value: 'EGFRex20', zh: 'EGFR exon20 插入突变', en: 'EGFR exon20 insertion' },
             { value: 'ALK', zh: 'ALK 重排（间变性淋巴瘤激酶）', en: 'ALK rearrangement' },
             { value: 'ROS1', zh: 'ROS1 重排', en: 'ROS1 rearrangement' },
-            { value: 'KRAS', zh: 'KRAS 突变', en: 'KRAS mutation' },
-            { value: 'METex14', zh: 'MET exon14 跳跃突变', en: 'MET exon14' },
+            { value: 'BRAF', zh: 'BRAF V600E 突变', en: 'BRAF V600E mutation' },
+            { value: 'KRAS', zh: 'KRAS G12C 等突变', en: 'KRAS mutation (eg, G12C)' },
+            { value: 'METex14', zh: 'MET exon14 跳跃突变', en: 'MET exon14 skipping' },
             { value: 'RET', zh: 'RET 融合', en: 'RET fusion' },
-            { value: 'none', zh: '未见明确驱动', en: 'No clear driver detected' }
+            { value: 'NTRK', zh: 'NTRK 融合', en: 'NTRK fusion' },
+            { value: 'HER2', zh: 'HER2/ERBB2 激活突变', en: 'HER2/ERBB2 activating mutation' },
+            { value: 'NRG1', zh: 'NRG1 融合', en: 'NRG1 fusion' },
+            { value: 'none', zh: '未见明确可操作驱动', en: 'No clear actionable driver detected' }
           ]},
           { id: 'pdl1', type: 'select', label: { zh: 'PD-L1（程序性死亡配体1）', en: 'PD-L1' }, options: [
             { value: 'unknown', zh: '未知', en: 'Unknown' },
@@ -871,12 +880,7 @@
           ]},
           { id: 'pathology', type: 'select', label: { zh: '病理类型', en: 'Pathology type' }, options: SC_PATHOLOGY_OPTIONS },
           { id: 'ecog', type: 'select', label: { zh: 'ECOG PS（体能状态评分）', en: 'ECOG PS' }, options: ECOG_OPTIONS, hint: { zh: 'ECOG 0–4 分分别代表从活动正常到完全卧床的体能状态。', en: 'ECOG 0–4 describes performance status from fully active to completely disabled.' } },
-          { id: 'specialT', type: 'select', label: { zh: '特殊病理病灶', en: 'Special lesion category' }, options: [
-            { value: '', zh: '常规病灶', en: 'Conventional lesion' },
-            { value: 'Tis', zh: '原位病变（Tis，原位癌）', en: 'In situ lesion (Tis)' },
-            { value: 'T1mi', zh: '微浸润病灶（T1mi，微浸润）', en: 'Minimally invasive lesion (T1mi)' }
-          ]},
-          { id: 'size', type: 'select', label: { zh: '肿瘤最大直径（按 T 分期下拉选择）', en: 'Tumor maximum diameter (T-based dropdown)' }, options: SIZE_OPTIONS, hint: { zh: 'T 分期核心先按肿瘤最大直径分层：T1a ≤1 cm，T1b >1–2 cm，T1c >2–3 cm，T2a >3–4 cm，T2b >4–5 cm，T3 >5–7 cm，T4 >7 cm；若存在更高级别侵犯特征，则按更高 T 分期计算。', en: 'The T descriptor is first grouped by tumor size, then upgraded when higher-level invasion features are present.' } }
+          { id: 'size', type: 'select', label: { zh: '肿瘤最大直径（按 T 分期下拉选择）', en: 'Tumor maximum diameter (T-based dropdown)' }, options: SIZE_OPTIONS, hint: { zh: '第9版中 T 描述符总体沿用第8版：T1a ≤1 cm，T1b >1–2 cm，T1c >2–3 cm，T2a >3–4 cm或符合T2a侵犯特征，T2b >4–5 cm，T3 >5–7 cm或符合T3侵犯特征，T4 >7 cm或符合T4侵犯特征。', en: 'In the 9th edition, T descriptors are largely unchanged from the 8th edition; size-based T is upgraded when higher-level invasion features are present.' } }
         ]
       },
       {
@@ -884,27 +888,29 @@
         fields: [
           { id: 't2', type: 'select', label: { zh: 'T2 升级特征（局部进展）', en: 'T2-upgrading feature' }, options: [
             { value: 'none', zh: '无', en: 'None' },
-            { value: 'T2', zh: '脏层胸膜 / 主支气管 / 肺不张（T2）', en: 'Visceral pleura / main bronchus / atelectasis (T2)' }
+            { value: 'T2', zh: '脏层胸膜 / 邻近肺叶 / 主支气管 / 肺不张（T2a）', en: 'Visceral pleura / adjacent lobe / main bronchus / atelectasis (T2a)' }
           ]},
           { id: 't3', type: 'select', label: { zh: 'T3 升级特征（局部侵犯）', en: 'T3-upgrading feature' }, options: [
             { value: 'none', zh: '无', en: 'None' },
-            { value: 'T3', zh: '胸壁 / 壁层心包 / 膈神经 / 同肺叶结节（T3）', en: 'Chest wall / parietal pericardium / phrenic nerve / same-lobe nodule (T3)' }
+            { value: 'T3', zh: '胸壁 / 壁层心包 / 膈神经 / 奇静脉 / 胸神经根 / 同肺叶结节（T3）', en: 'Chest wall / parietal pericardium / phrenic nerve / azygos vein / thoracic nerve root / same-lobe nodule (T3)' }
           ]},
           { id: 't4', type: 'select', label: { zh: 'T4 升级特征（高级别局部侵犯）', en: 'T4-upgrading feature' }, full: true, options: [
             { value: 'none', zh: '无', en: 'None' },
-            { value: 'T4', zh: '纵隔 / 大血管 / 气管 / 隆突 / 食管 / 椎体 / 同侧不同肺叶结节（T4）', en: 'Mediastinum / great vessels / trachea / carina / esophagus / vertebral body / different ipsilateral lobe nodule (T4)' }
+            { value: 'T4', zh: '纵隔 / 大血管 / 气管 / 隆突 / 返喉神经 / 食管 / 膈肌 / 椎体 / 同侧不同肺叶结节（T4）', en: 'Mediastinum / great vessels / trachea / carina / recurrent laryngeal nerve / esophagus / diaphragm / vertebral body / different ipsilateral lobe nodule (T4)' }
           ]},
           { id: 'n', type: 'select', label: { zh: 'N 分期（淋巴结转移）', en: 'N descriptor' }, options: [
             { value: 'N0', zh: 'N0（无区域淋巴结转移）', en: 'N0' },
             { value: 'N1', zh: 'N1（同侧肺门 / 肺内 / 支气管旁淋巴结转移）', en: 'N1' },
-            { value: 'N2', zh: 'N2（同侧纵隔 / 隆突下淋巴结转移）', en: 'N2' },
-            { value: 'N3', zh: 'N3（对侧纵隔 / 锁骨上等淋巴结转移）', en: 'N3' }
+            { value: 'N2a', zh: 'N2a（单站同侧纵隔 / 隆突下淋巴结转移）', en: 'N2a' },
+            { value: 'N2b', zh: 'N2b（多站同侧纵隔 / 隆突下淋巴结转移）', en: 'N2b' },
+            { value: 'N3', zh: 'N3（对侧纵隔 / 对侧肺门 / 锁骨上等淋巴结转移）', en: 'N3' }
           ]},
           { id: 'm', type: 'select', label: { zh: 'M 分期（远处转移）', en: 'M descriptor' }, options: [
             { value: 'M0', zh: 'M0（无远处转移）', en: 'M0' },
-            { value: 'M1a', zh: 'M1a（胸膜结节 / 恶性胸腔积液 / 对侧肺结节）', en: 'M1a' },
-            { value: 'M1b', zh: 'M1b（单发胸外转移）', en: 'M1b' },
-            { value: 'M1c', zh: 'M1c（多发胸外转移）', en: 'M1c' }
+            { value: 'M1a', zh: 'M1a（胸膜/心包结节或恶性积液、对侧肺结节）', en: 'M1a' },
+            { value: 'M1b', zh: 'M1b（单发胸外转移，单一器官系统）', en: 'M1b' },
+            { value: 'M1c1', zh: 'M1c1（单一器官系统内多发胸外转移）', en: 'M1c1' },
+            { value: 'M1c2', zh: 'M1c2（多个器官系统胸外转移）', en: 'M1c2' }
           ]},
           { id: 'limited', type: 'select', label: { zh: '胸部放疗野是否可包容全部病灶（局限期/广泛期判断）', en: 'Can a thoracic RT field encompass all disease?' }, full: true, options: [
             { value: 'yes', zh: '是（倾向局限期）', en: 'Yes (favors limited-stage)' },
@@ -962,24 +968,22 @@
     function isT1(t) { return ['T1mi', 'T1a', 'T1b', 'T1c'].includes(t); }
     function isT2(t) { return ['T2a', 'T2b'].includes(t); }
     function computeStage(t, n, m) {
-      if (m === 'M1c') return 'IVB';
-      if (m === 'M1a' || m === 'M1b') return 'IVA';
-      if (t === 'Tis' && n === 'N0') return '0';
-      if ((t === 'T1mi' || t === 'T1a') && n === 'N0') return 'IA1';
-      if (t === 'T1b' && n === 'N0') return 'IA2';
-      if (t === 'T1c' && n === 'N0') return 'IA3';
-      if (t === 'T2a' && n === 'N0') return 'IB';
-      if (t === 'T2b' && n === 'N0') return 'IIA';
-      if ((isT1(t) || isT2(t)) && n === 'N1') return 'IIB';
-      if (t === 'T3' && n === 'N0') return 'IIB';
-      if ((isT1(t) || isT2(t)) && n === 'N2') return 'IIIA';
-      if (t === 'T3' && n === 'N1') return 'IIIA';
-      if (t === 'T4' && (n === 'N0' || n === 'N1')) return 'IIIA';
-      if ((isT1(t) || isT2(t)) && n === 'N3') return 'IIIB';
-      if ((t === 'T3' || t === 'T4') && n === 'N2') return 'IIIB';
-      if ((t === 'T3' || t === 'T4') && n === 'N3') return 'IIIC';
-      return 'Needs review';
-    }
+  // IASLC / UICC / AJCC 9th edition lung TNM stage grouping.
+  if (m === 'M1c1' || m === 'M1c2') return 'IVB';
+  if (m === 'M1a' || m === 'M1b') return 'IVA';
+  if (m !== 'M0') return 'Needs review';
+  if (t === 'Tis' && n === 'N0') return '0';
+  if ((t === 'T1mi' || t === 'T1a') && n === 'N0') return 'IA1';
+  if (t === 'T1b' && n === 'N0') return 'IA2';
+  if (t === 'T1c' && n === 'N0') return 'IA3';
+  if (t === 'T2a' && n === 'N0') return 'IB';
+  if ((isT1(t) && n === 'N1') || (t === 'T2b' && n === 'N0')) return 'IIA';
+  if ((t === 'T2a' && n === 'N1') || (isT1(t) && n === 'N2a') || (t === 'T2b' && n === 'N1') || (t === 'T3' && n === 'N0')) return 'IIB';
+  if ((isT1(t) && n === 'N2b') || (isT2(t) && n === 'N2a') || (t === 'T3' && (n === 'N1' || n === 'N2a')) || (t === 'T4' && (n === 'N0' || n === 'N1'))) return 'IIIA';
+  if ((isT1(t) && n === 'N3') || (isT2(t) && (n === 'N2b' || n === 'N3')) || (t === 'T3' && n === 'N2b') || (t === 'T4' && (n === 'N2a' || n === 'N2b'))) return 'IIIB';
+  if ((t === 'T3' || t === 'T4') && n === 'N3') return 'IIIC';
+  return 'Needs review';
+}
 
     function calcT(data) {
       if (data.specialT) {
@@ -1081,134 +1085,144 @@
     }
 
     function nsPlan(stage) {
-      const lang = state.lang;
-      const pathology = pathologyText('ns');
-      const cards = [];
-      if (['0','IA1','IA2','IA3'].includes(stage)) {
-        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '以根治性手术切除为首选，建议同时完成系统性淋巴结取样或清扫；对无法耐受手术者，可评估 SBRT（立体定向放疗）或消融治疗。' : 'Curative-intent surgical resection with systematic nodal sampling/dissection is preferred; consider SBRT or ablation if surgery is not feasible.' });
-        cards.push({ title: lang === 'zh' ? '围术期策略' : 'Perioperative strategy', body: lang === 'zh' ? 'IA 期通常以手术为主，需结合切缘、淋巴结与高危病理因素决定是否进一步处理。' : 'Stage IA disease is usually surgery-dominant, with further decisions guided by margins, nodal status, and high-risk pathology.' });
-      } else if (['IB','IIA'].includes(stage)) {
-        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '仍以手术切除为核心；IB 高危因素或 IIA 患者通常需评估辅助化疗。' : 'Surgery remains central; adjuvant chemotherapy should be considered in high-risk IB or IIA disease.' });
-        cards.push({ title: lang === 'zh' ? '围术期补充' : 'Perioperative note', body: lang === 'zh' ? '对存在高危病理因素、淋巴血管侵犯或驱动基因阳性的患者，应进一步评估辅助治疗与个体化药物路径。' : 'High-risk pathology, lymphovascular invasion, or driver-positive disease should trigger individualized adjuvant planning.' });
-      } else if (['IIB','IIIA'].includes(stage)) {
-        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? `当前切除性评估为“${resectText()}”，建议进入 MDT（多学科团队）讨论。可切除或边界可切除病例，优先考虑新辅助系统治疗 ± 手术；不可切除者转入局晚期根治性放化疗路径。` : `Current resectability is “${resectText()}”; MDT review is recommended. Resectable or borderline-resectable disease generally favors neoadjuvant systemic therapy ± surgery, whereas unresectable disease should move to definitive chemoradiotherapy pathways.` });
-        cards.push({ title: lang === 'zh' ? '关键判断点' : 'Key decision points', body: lang === 'zh' ? '需综合纵隔淋巴结负荷、病灶范围、肺功能和手术耐受性，决定是否进入手术路径。' : 'Mediastinal nodal burden, extent of disease, pulmonary reserve, and surgical fitness should guide the decision on surgery.' });
-      } else if (['IIIB','IIIC'].includes(stage)) {
-        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '多数属于不可切除局晚期 NSCLC，标准路径通常为同步放化疗；完成后若无进展且条件合适，可评估巩固免疫治疗。' : 'Most cases represent unresectable locally advanced NSCLC, typically managed with concurrent chemoradiotherapy followed by consolidation immunotherapy when appropriate.' });
-        cards.push({ title: lang === 'zh' ? '实施重点' : 'Implementation focus', body: lang === 'zh' ? '治疗前应完成分期复核、靶区评估、肺功能和器官功能评估，并根据耐受性决定同步或序贯方案。' : 'Reconfirm stage, target volume, pulmonary function, and organ reserve before selecting concurrent versus sequential treatment.' });
-      } else if (['IVA','IVB'].includes(stage)) {
-        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '晚期 NSCLC 应先完成分子分型与 PD-L1 评估，再根据驱动基因状态、PD-L1 水平、症状负荷与转移范围决定靶向治疗、免疫治疗、化疗联合方案或姑息支持治疗。' : 'Advanced NSCLC should start with full molecular profiling and PD-L1 evaluation, then branch into targeted therapy, immunotherapy, combination systemic therapy, or palliative care according to biomarkers and disease burden.' });
-        cards.push({ title: lang === 'zh' ? '寡转移补充' : 'Oligometastatic note', body: lang === 'zh' ? '对部分寡转移或局部症状突出的患者，可结合局部消融、放疗或手术进行整合治疗。' : 'Selected oligometastatic or symptom-dominant lesions may benefit from integrated local therapy such as ablation, radiotherapy, or surgery.' });
-      } else {
-        cards.push({ tone: 'warning', title: lang === 'zh' ? '人工复核' : 'Manual review', body: lang === 'zh' ? '当前 TNM 组合需人工复核，并结合影像、病理和临床状态做最终治疗决策。' : 'This TNM combination requires manual review together with imaging, pathology, and clinical status.' });
-      }
-
-      if (state.ns.driver === 'pending') {
-        cards.push({ title: lang === 'zh' ? '分子检测' : 'Molecular testing', body: lang === 'zh' ? `当前病理类型为 ${pathology}。正式流程中应尽快补齐 EGFR、ALK、ROS1、BRAF、KRAS、MET、RET、NTRK、HER2 及 PD-L1 等关键检测。` : `Current pathology is ${pathology}. Complete EGFR, ALK, ROS1, BRAF, KRAS, MET, RET, NTRK, HER2, and PD-L1 testing as part of the formal workup.` });
-      } else if (state.ns.driver !== 'none') {
-        cards.push({ title: lang === 'zh' ? '靶向路径' : 'Targeted pathway', body: lang === 'zh' ? `已知 ${driverText()} 异常，正式治疗应优先评估对应靶向治疗在围术期或晚期阶段中的适应证。` : `${driverText()} is already identified, so the corresponding targeted strategy should be formally evaluated in the perioperative or advanced setting.` });
-      } else {
-        cards.push({ title: lang === 'zh' ? '免疫 / 化疗路径' : 'Immunotherapy / chemotherapy pathway', body: lang === 'zh' ? `当前未见明确驱动基因，PD-L1（程序性死亡配体1）为 ${pdl1Text()}；正式方案中应据此评估免疫单药、免疫联合化疗或化疗方案。` : `No clear driver is detected and PD-L1 is ${pdl1Text()}, so formal treatment selection should consider monotherapy immunotherapy, chemo-immunotherapy, or chemotherapy.` });
-      }
-
-      if (Number(state.ns.ecog) >= 3) {
-        cards.push({ tone: 'warning', title: lang === 'zh' ? '体能状态修正' : 'Performance adjustment', body: lang === 'zh' ? '当前 ECOG PS 较差，应更加重视支持治疗、症状控制、营养评估以及治疗强度下调。' : 'Poor ECOG status should shift emphasis toward supportive care, symptom control, nutrition, and de-intensified treatment.' });
-      }
-      return renderPathCards(I18N[state.lang].planTitle, cards);
-    }
+  const lang = state.lang;
+  const pathology = pathologyText('ns');
+  const cards = [];
+  const driver = state.ns.driver;
+  const hasActionableDriver = !['pending', 'none'].includes(driver);
+  if (['0','IA1','IA2','IA3'].includes(stage)) {
+    cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '以根治性手术切除为首选，建议同时完成系统性淋巴结取样或清扫；无法耐受手术或拒绝手术者，可评估 SBRT（立体定向放疗）或消融治疗。' : 'Curative-intent surgery with systematic nodal sampling/dissection is preferred; consider SBRT or ablation when surgery is not feasible or declined.' });
+    cards.push({ title: lang === 'zh' ? '辅助治疗' : 'Adjuvant treatment', body: lang === 'zh' ? 'IA 期通常不常规辅助化疗；若存在切缘阳性、意外淋巴结转移或其他高危因素，应按术后病理重新分期并 MDT 讨论。' : 'Adjuvant chemotherapy is not routine for stage IA; positive margins, unexpected nodal disease, or high-risk findings should trigger pathologic restaging and MDT review.' });
+  } else if (['IB','IIA'].includes(stage)) {
+    cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '以根治性手术切除和系统性淋巴结评估为核心；IB 高危因素、IIA 或术后病理提示高复发风险者，应评估辅助化疗及个体化辅助靶向/免疫治疗。' : 'Curative surgery with systematic nodal assessment remains central; high-risk IB, IIA, or high-risk pathologic findings should prompt adjuvant chemotherapy and individualized targeted/immunotherapy assessment.' });
+    cards.push({ title: lang === 'zh' ? '术后分子分型' : 'Postoperative biomarkers', body: lang === 'zh' ? '腺癌、腺鳞癌及非鳞 NSCLC 建议完善 NGS 或等效检测；可操作驱动阳性者需评估相应辅助靶向治疗适应证。' : 'Adenocarcinoma, adenosquamous and non-squamous NSCLC should undergo broad molecular testing; actionable driver-positive disease requires assessment for adjuvant targeted therapy eligibility.' });
+  } else if (['IIB','IIIA'].includes(stage)) {
+    cards.push({ tone: 'primary', title: lang === 'zh' ? 'MDT 与围术期治疗' : 'MDT and perioperative treatment', body: lang === 'zh' ? `当前切除性评估为“${resectText()}”。可切除或边界可切除病例建议 MDT 讨论，结合 N2a/N2b、肿瘤负荷、肺功能和驱动基因/PD-L1 状态，选择新辅助化疗、免疫联合化疗、靶向治疗或手术后辅助治疗路径。` : `Current resectability is “${resectText()}”. For resectable or borderline disease, MDT should integrate N2a/N2b status, tumor burden, pulmonary reserve, driver alterations and PD-L1 to select neoadjuvant chemotherapy, chemoimmunotherapy, targeted therapy, surgery, and/or adjuvant therapy.` });
+    cards.push({ title: lang === 'zh' ? '不可切除转换' : 'If unresectable', body: lang === 'zh' ? '若评估为不可切除，应转入局晚期根治性放化疗路径，并提前确认 EGFR/ALK 等驱动基因和免疫治疗适用性。' : 'If unresectable, move to definitive locally advanced chemoradiotherapy pathways and clarify EGFR/ALK and immunotherapy suitability early.' });
+  } else if (['IIIB','IIIC'].includes(stage)) {
+    cards.push({ tone: 'primary', title: lang === 'zh' ? '不可切除局晚期路径' : 'Unresectable locally advanced pathway', body: lang === 'zh' ? '多数 IIIB/IIIC 属于不可切除局晚期 NSCLC，标准主线通常为同步含铂放化疗；无法耐受同步者可采用序贯方案。治疗前需完成 PET-CT、脑 MRI、纵隔分期、肺功能和器官功能评估。' : 'Most stage IIIB/IIIC cases are unresectable locally advanced NSCLC. Concurrent platinum-based chemoradiotherapy is generally preferred; sequential treatment may be used when concurrent treatment is not tolerated. Complete PET-CT, brain MRI, mediastinal staging, pulmonary and organ-function assessment before treatment.' });
+    cards.push({ title: lang === 'zh' ? '巩固治疗' : 'Consolidation', body: lang === 'zh' ? '放化疗后未进展者，应根据驱动基因和禁忌证评估巩固治疗：无免疫禁忌且适合者考虑 durvalumab；EGFR exon19del / L858R 阳性且符合条件者应评估奥希替尼巩固路径。' : 'If there is no progression after chemoradiotherapy, assess consolidation according to biomarkers and contraindications: durvalumab when immunotherapy-appropriate, and osimertinib for eligible EGFR exon19del / L858R disease.' });
+  } else if (['IVA','IVB'].includes(stage)) {
+    cards.push({ tone: 'primary', title: lang === 'zh' ? '晚期系统治疗' : 'Advanced systemic therapy', body: lang === 'zh' ? '晚期 NSCLC 应先完成充分分子分型与 PD-L1 评估，再根据 EGFR、ALK、ROS1、BRAF、KRAS G12C、METex14、RET、NTRK、HER2、EGFR exon20、NRG1 等可操作异常、PD-L1 水平、症状负荷和转移范围选择靶向治疗、免疫治疗、免疫联合化疗、化疗或最佳支持治疗。' : 'Advanced NSCLC should start with broad molecular profiling and PD-L1 assessment, then select targeted therapy, immunotherapy, chemoimmunotherapy, chemotherapy, or best supportive care based on actionable alterations including EGFR, ALK, ROS1, BRAF, KRAS G12C, METex14, RET, NTRK, HER2, EGFR exon20, NRG1, PD-L1, symptom burden and disease extent.' });
+    cards.push({ title: lang === 'zh' ? '局部整合治疗' : 'Integrated local therapy', body: lang === 'zh' ? '对寡转移、寡进展或局部症状明显者，可在系统治疗基础上结合放疗、消融、手术或其他局部治疗。' : 'For oligometastatic, oligoprogressive or symptom-dominant disease, combine systemic therapy with radiotherapy, ablation, surgery or other local therapy when appropriate.' });
+  } else {
+    cards.push({ tone: 'warning', title: lang === 'zh' ? '人工复核' : 'Manual review', body: lang === 'zh' ? '当前 TNM 组合需人工复核，并结合影像、病理和临床状态做最终治疗决策。' : 'This TNM combination requires manual review together with imaging, pathology, and clinical status.' });
+  }
+  if (state.ns.driver === 'pending') {
+    cards.push({ title: lang === 'zh' ? '分子检测' : 'Molecular testing', body: lang === 'zh' ? `当前病理类型为 ${pathology}。正式流程中应尽快补齐 EGFR、ALK、ROS1、BRAF V600E、KRAS G12C、MET exon14、RET、NTRK、HER2/ERBB2、EGFR exon20、NRG1 及 PD-L1 等关键检测；晚期或复发病例优先使用 NGS 或等效广谱检测。` : `Current pathology is ${pathology}. Complete EGFR, ALK, ROS1, BRAF V600E, KRAS G12C, MET exon14, RET, NTRK, HER2/ERBB2, EGFR exon20, NRG1, and PD-L1 testing; broad NGS or equivalent profiling is preferred for advanced or recurrent disease.` });
+  } else if (hasActionableDriver) {
+    cards.push({ title: lang === 'zh' ? '靶向路径' : 'Targeted pathway', body: lang === 'zh' ? `已知 ${driverText()} 异常，正式治疗应优先评估对应靶向治疗在围术期、不可切除局晚期或晚期阶段中的适应证；免疫治疗需谨慎结合驱动基因、PD-L1 和毒性风险。` : `${driverText()} is identified, so the corresponding targeted strategy should be prioritized in the perioperative, unresectable locally advanced, or metastatic setting; immunotherapy should be weighed carefully with biomarker and toxicity considerations.` });
+  } else {
+    cards.push({ title: lang === 'zh' ? '免疫 / 化疗路径' : 'Immunotherapy / chemotherapy pathway', body: lang === 'zh' ? `当前未见明确可操作驱动，PD-L1 为 ${pdl1Text()}；正式方案中应据此评估免疫单药、免疫联合化疗、双免疫联合或化疗方案。` : `No clear actionable driver is detected and PD-L1 is ${pdl1Text()}, so formal treatment selection should consider single-agent immunotherapy, chemoimmunotherapy, dual immunotherapy combinations, or chemotherapy.` });
+  }
+  if (Number(state.ns.ecog) >= 3) cards.push({ tone: 'warning', title: lang === 'zh' ? '体能状态修正' : 'Performance adjustment', body: lang === 'zh' ? '当前 ECOG PS 较差，应更加重视支持治疗、症状控制、营养评估、合并症处理以及治疗强度下调。' : 'Poor ECOG status should shift emphasis toward supportive care, symptom control, nutrition, comorbidity management, and de-intensified treatment.' });
+  return renderPathCards(I18N[state.lang].planTitle, cards);
+}
 
     function nsFollow(stage) {
-      const lang = state.lang;
-      const items = [];
-      if (['0','IA1','IA2','IA3','IB','IIA'].includes(stage)) {
-        items.push({ time: lang === 'zh' ? '0–3 年' : '0–3 years', desc: lang === 'zh' ? '建议每 6 个月复诊 1 次，重点评估病史、体检和胸部 CT（计算机断层扫描）。' : 'Follow up every 6 months with history, physical exam, and chest CT.' });
-        items.push({ time: lang === 'zh' ? '3 年后' : 'After year 3', desc: lang === 'zh' ? '通常每年 1 次胸部 CT，并持续关注第二原发肺癌风险。' : 'Usually continue annual chest CT while watching for second primary lung cancer.' });
-        items.push({ time: lang === 'zh' ? '重点' : 'Focus', desc: lang === 'zh' ? '关注局部复发、术后肺功能恢复及治疗相关并发症。' : 'Watch for local recurrence, postoperative pulmonary recovery, and treatment-related complications.' });
-      } else if (['IIB','IIIA','IIIB','IIIC'].includes(stage)) {
-        items.push({ time: lang === 'zh' ? '0–3 年' : '0–3 years', desc: lang === 'zh' ? '建议每 3–6 个月复评 1 次，结合胸部 CT（计算机断层扫描）和必要时脑 MRI（磁共振）/ 上腹部影像。' : 'Reassess every 3–6 months using chest CT and brain / upper abdominal imaging when indicated.' });
-        items.push({ time: lang === 'zh' ? '3–5 年' : '3–5 years', desc: lang === 'zh' ? '可逐步改为每 6 个月左右，之后按病情稳定度进一步放宽。' : 'Intervals can often be widened to about every 6 months, then further individualized according to disease stability.' });
-        items.push({ time: lang === 'zh' ? '重点' : 'Focus', desc: lang === 'zh' ? '需同步关注放射性肺炎、食管损伤、免疫相关不良反应和残余病灶变化。' : 'Also monitor radiation pneumonitis, esophageal injury, immune-related toxicity, and residual disease changes.' });
-      } else if (['IVA','IVB'].includes(stage)) {
-        items.push({ time: lang === 'zh' ? '治疗中' : 'On treatment', desc: lang === 'zh' ? '常按 6–12 周进行一次影像疗效评估，频率与治疗周期、药物机制和病情变化同步调整。' : 'Imaging response assessment is commonly performed every 6–12 weeks and adjusted to treatment cycles, drug class, and disease dynamics.' });
-        items.push({ time: lang === 'zh' ? '稳定后' : 'After stabilization', desc: lang === 'zh' ? '继续按病灶部位和治疗方案个体化安排 CT（计算机断层扫描）/ MRI（磁共振），同时评估症状、器官功能和生活质量。' : 'Continue individualized CT / MRI scheduling while tracking symptoms, organ function, and quality of life.' });
-      } else {
-        items.push({ time: lang === 'zh' ? '人工复核' : 'Manual review', desc: lang === 'zh' ? '当前组合建议人工复核后再给出个体化随访频率。' : 'This combination should be manually reviewed before assigning individualized surveillance intervals.' });
-      }
-      items.push({ time: lang === 'zh' ? '专项' : 'Special', desc: lang === 'zh' ? '靶向治疗初期建议每 4–8 周评估疗效与不良反应；免疫治疗期间需常规监测甲状腺功能、肝功能、肾上腺、垂体及肺炎等免疫相关不良事件。' : 'Early during targeted therapy, reassess efficacy and toxicity every 4–8 weeks; during immunotherapy, routinely monitor thyroid, liver, adrenal, pituitary, and pneumonitis-related toxicities.' });
-      return renderTimeline(I18N[state.lang].followTitle, items);
-    }
+  const lang = state.lang;
+  const items = [];
+  if (['0','IA1','IA2','IA3','IB','IIA','IIB','IIIA'].includes(stage)) {
+    items.push({ time: lang === 'zh' ? '根治后 0–2 年' : '0–2 years after curative treatment', desc: lang === 'zh' ? '建议每 6 个月进行病史、体检和胸部 CT（建议包含肾上腺范围；是否增强按临床场景决定），用于发现复发。' : 'History, physical examination, and chest CT every 6 months; include the adrenals when appropriate, with contrast individualized by clinical context.' });
+    items.push({ time: lang === 'zh' ? '2 年后' : 'After year 2', desc: lang === 'zh' ? '建议每年 1 次胸部低剂量 CT 或胸部 CT，用于发现第二原发肺癌和晚期复发。' : 'Annual low-dose chest CT or chest CT is recommended to detect second primary lung cancers and late recurrence.' });
+    items.push({ time: lang === 'zh' ? '不常规' : 'Not routine', desc: lang === 'zh' ? '无症状且无可疑发现时，不建议把 PET/CT 或脑 MRI 作为常规随访项目；出现症状或影像疑点时再定向检查。' : 'PET/CT and brain MRI are not routine in asymptomatic patients without suspicious findings; use targeted imaging when symptoms or imaging concerns arise.' });
+  } else if (['IIIB','IIIC'].includes(stage)) {
+    items.push({ time: lang === 'zh' ? '放化疗后 0–3 年' : '0–3 years after chemoradiotherapy', desc: lang === 'zh' ? '建议每 3–6 个月复评 1 次，重点评估胸部 CT、治疗反应、残余病灶变化和复发风险；根据分期和症状决定脑 MRI、上腹部影像或 PET/CT。' : 'Reassess every 3–6 months with chest CT, response status, residual disease and recurrence risk; brain MRI, upper abdominal imaging or PET/CT should be symptom- and stage-directed.' });
+    items.push({ time: lang === 'zh' ? '3–5 年' : '3–5 years', desc: lang === 'zh' ? '若病情稳定，可逐步改为每 6 个月左右；5 年后通常按年度 CT 监测第二原发肺癌。' : 'If stable, intervals can often widen to about every 6 months; after 5 years, annual CT surveillance is commonly used to detect second primary lung cancer.' });
+    items.push({ time: lang === 'zh' ? '毒性监测' : 'Toxicity monitoring', desc: lang === 'zh' ? '需持续关注放射性肺炎、食管损伤、心肺毒性、免疫相关不良反应，以及 EGFR/ALK 等靶向治疗相关毒性。' : 'Monitor radiation pneumonitis, esophageal injury, cardiopulmonary toxicity, immune-related adverse events, and targeted-therapy toxicities.' });
+  } else if (['IVA','IVB'].includes(stage)) {
+    items.push({ time: lang === 'zh' ? '治疗中' : 'On treatment', desc: lang === 'zh' ? '常按 6–12 周进行一次影像疗效评估，频率与治疗周期、药物机制、症状变化和转移部位同步调整。' : 'Imaging response assessment is commonly performed every 6–12 weeks and adjusted to treatment cycles, drug class, symptoms, and metastatic sites.' });
+    items.push({ time: lang === 'zh' ? '稳定后' : 'After stabilization', desc: lang === 'zh' ? '继续按病灶部位和治疗方案个体化安排 CT / MRI，同时评估症状、器官功能、生活质量和治疗毒性。' : 'Continue individualized CT / MRI scheduling while tracking symptoms, organ function, quality of life, and treatment toxicity.' });
+  } else {
+    items.push({ time: lang === 'zh' ? '人工复核' : 'Manual review', desc: lang === 'zh' ? '当前组合建议人工复核后再给出个体化随访频率。' : 'This combination should be manually reviewed before assigning individualized surveillance intervals.' });
+  }
+  items.push({ time: lang === 'zh' ? '专项' : 'Special', desc: lang === 'zh' ? '靶向治疗初期建议每 4–8 周评估疗效与不良反应；免疫治疗期间需常规监测甲状腺功能、肝功能、肾上腺、垂体、肺炎及其他免疫相关不良事件。' : 'Early during targeted therapy, reassess efficacy and toxicity every 4–8 weeks; during immunotherapy, routinely monitor thyroid, liver, adrenal, pituitary, pneumonitis, and other immune-related toxicities.' });
+  return renderTimeline(I18N[state.lang].followTitle, items);
+}
 
     function scPlan(stage, simple) {
-      const lang = state.lang;
-      const pathology = pathologyText('sc');
-      const cards = [];
-      if (simple === I18N[state.lang].limited) {
-        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '局限期 SCLC（小细胞肺癌）通常以同步放化疗为标准主线；极少数 very early（极早期）且可切除病例，可在 MDT（多学科团队）评估后讨论手术路径。' : 'Limited-stage SCLC is generally treated with concurrent chemoradiotherapy; only a very small subset of very early resectable cases may be considered for surgery after MDT review.' });
-        cards.push({ title: lang === 'zh' ? '关键补充' : 'Key addition', body: lang === 'zh' ? '对达到良好缓解且全身状态允许者，正式路径中应评估 PCI（预防性颅脑照射）以及胸部放疗整合策略。' : 'In patients with good response and suitable condition, the formal pathway should assess PCI and thoracic radiotherapy integration.' });
-      } else {
-        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '广泛期 SCLC 多以含铂 + 依托泊苷 ± 免疫治疗为标准主线，根据症状和转移部位决定是否合并局部姑息治疗。' : 'Extensive-stage SCLC is commonly managed with platinum-etoposide ± immunotherapy, with local palliation added according to symptoms and metastatic sites.' });
-        cards.push({ title: lang === 'zh' ? '关键补充' : 'Key addition', body: lang === 'zh' ? '对症状性病灶、脑转移或胸部残余病灶，应评估姑息放疗、局部控制和支持治疗。' : 'Symptomatic lesions, brain metastases, or thoracic residual disease should prompt evaluation for palliative radiotherapy, local control, and supportive care.' });
-      }
-      cards.push({ title: lang === 'zh' ? '病理与分期' : 'Pathology and staging', body: lang === 'zh' ? `当前病理类型为 ${pathology}；当前 TNM 为 ${stage}，简化分期为 ${simple}。` : `Current pathology is ${pathology}; TNM stage is ${stage}, and the simplified stage is ${simple}.` });
-      cards.push({ title: lang === 'zh' ? '治疗前评估' : 'Pretreatment assessment', body: lang === 'zh' ? `脑 MRI（磁共振）为 ${brainText()}；症状负荷为 ${symptomText()}。正式路径中还应同步关注器官功能、骨髓储备和并发症风险。` : `Brain MRI is ${brainText()} and symptom burden is ${symptomText()}. Formal planning should also address organ function, marrow reserve, and complication risk.` });
-      if (Number(state.sc.ecog) >= 3) cards.push({ tone: 'warning', title: lang === 'zh' ? '体能状态修正' : 'Performance adjustment', body: lang === 'zh' ? 'ECOG PS 较差时，应进一步强化支持治疗、症状缓解和治疗强度个体化调整。' : 'Poor ECOG PS should increase emphasis on supportive care, symptom relief, and individualized treatment intensity.' });
-      return renderPathCards(I18N[state.lang].planTitle, cards);
-    }
+  const lang = state.lang;
+  const pathology = pathologyText('sc');
+  const cards = [];
+  if (simple === I18N[state.lang].limited) {
+    cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '局限期 SCLC 通常以同步含铂依托泊苷放化疗为标准主线；极少数 very early 且可切除病例，可在 MDT 评估后讨论手术 + 术后化疗路径。' : 'Limited-stage SCLC is generally treated with concurrent platinum-etoposide chemoradiotherapy; only a very small subset of very early resectable cases may be considered for surgery plus postoperative chemotherapy after MDT review.' });
+    cards.push({ title: lang === 'zh' ? '放化疗后巩固' : 'Post-chemoradiotherapy consolidation', body: lang === 'zh' ? '同步含铂化疗和放疗后未进展且条件合适者，应评估 durvalumab 巩固治疗；对获得良好缓解者，同时讨论 PCI（预防性颅脑照射）或规律脑 MRI 监测。' : 'If there is no progression after concurrent platinum-based chemotherapy and radiation, assess durvalumab consolidation; in good responders, discuss PCI versus structured brain MRI surveillance.' });
+  } else {
+    cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '广泛期 SCLC 在无免疫禁忌时，应优先考虑含铂（卡铂或顺铂）+ 依托泊苷 + PD-L1 抑制剂（atezolizumab 或 durvalumab），随后免疫维持；有禁忌时采用含铂依托泊苷或个体化方案。' : 'For extensive-stage SCLC without immunotherapy contraindications, use platinum (carboplatin or cisplatin) plus etoposide plus a PD-L1 inhibitor (atezolizumab or durvalumab), followed by maintenance immunotherapy; use platinum-etoposide or individualized therapy when contraindicated.' });
+    cards.push({ title: lang === 'zh' ? '局部和支持治疗' : 'Local and supportive care', body: lang === 'zh' ? '对症状性病灶、脑转移、骨转移、上腔静脉综合征或胸部残余病灶，应评估姑息放疗、局部控制、骨保护和支持治疗。' : 'Symptomatic lesions, brain metastases, bone metastases, superior vena cava syndrome, or thoracic residual disease should prompt palliative radiotherapy, local control, bone-directed care, and supportive care.' });
+  }
+  cards.push({ title: lang === 'zh' ? '病理与分期' : 'Pathology and staging', body: lang === 'zh' ? `当前病理类型为 ${pathology}；当前 TNM 第9版总分期为 ${stage}，简化分期为 ${simple}。` : `Current pathology is ${pathology}; TNM 9th-edition stage is ${stage}, and the simplified stage is ${simple}.` });
+  cards.push({ title: lang === 'zh' ? '治疗前评估' : 'Pretreatment assessment', body: lang === 'zh' ? `脑 MRI（优先）/头颅增强 CT 状态为 ${brainText()}；症状负荷为 ${symptomText()}。正式路径中还应同步关注器官功能、骨髓储备、低钠血症、神经内分泌相关综合征和并发症风险。` : `Brain MRI (preferred) / contrast head CT status is ${brainText()} and symptom burden is ${symptomText()}. Formal planning should also address organ function, marrow reserve, hyponatremia, neuroendocrine syndromes, and complication risk.` });
+  if (Number(state.sc.ecog) >= 3) cards.push({ tone: 'warning', title: lang === 'zh' ? '体能状态修正' : 'Performance adjustment', body: lang === 'zh' ? 'ECOG PS 较差时，应进一步强化支持治疗、症状缓解和治疗强度个体化调整。' : 'Poor ECOG PS should increase emphasis on supportive care, symptom relief, and individualized treatment intensity.' });
+  return renderPathCards(I18N[state.lang].planTitle, cards);
+}
 
     function scFollow(simple) {
-      const lang = state.lang;
-      const items = [];
-      if (simple === I18N[state.lang].limited) {
-        items.push({ time: lang === 'zh' ? '0–2 年' : '0–2 years', desc: lang === 'zh' ? '建议每 3 个月左右评估 1 次，重点胸部 CT（计算机断层扫描）、症状变化和脑部复发风险。' : 'Reassess about every 3 months with chest CT, symptom review, and attention to brain relapse risk.' });
-        items.push({ time: lang === 'zh' ? '第 3 年后' : 'After year 3', desc: lang === 'zh' ? '可逐步改为每 6 个月，再往后按年评估。' : 'Follow-up can later be spaced to every 6 months and then yearly.' });
-      } else {
-        items.push({ time: lang === 'zh' ? '治疗中' : 'On treatment', desc: lang === 'zh' ? '通常每 2–3 个周期评估疗效；获得缓解或稳定后，继续密切追踪胸部和脑部病灶，并按治疗方案调整影像节奏。' : 'Efficacy is commonly assessed every 2–3 cycles; after response or stabilization, continue close thoracic and brain surveillance with imaging intervals adjusted to treatment.' });
-      }
-      items.push({ time: lang === 'zh' ? 'PCI 后' : 'After PCI', desc: lang === 'zh' ? '前 2 年建议每 3–6 个月进行神经系统症状评估，必要时加做脑 MRI（磁共振），之后每 6–12 个月复查。' : 'During the first 2 years, assess neurologic symptoms every 3–6 months and obtain brain MRI when clinically indicated; afterward, reassess every 6–12 months.' });
-      items.push({ time: lang === 'zh' ? '脑转移后' : 'After brain metastases', desc: lang === 'zh' ? '完成局部治疗后前 1 年建议每 2–3 个月复查脑 MRI（磁共振），其后每 3–6 个月评估一次，并结合胸部影像同步判断全身病情。' : 'In the first year after local therapy, brain MRI is commonly repeated every 2–3 months, then every 3–6 months together with thoracic disease assessment.' });
-      items.push({ time: lang === 'zh' ? '免疫治疗中' : 'During immunotherapy', desc: lang === 'zh' ? '建议每 2–3 个周期评估疗效，同时常规监测甲状腺功能、肝功能、肺炎表现及其他免疫相关不良反应。' : 'Reassess efficacy every 2–3 cycles while monitoring thyroid function, liver function, pneumonitis signals, and other immune-related toxicities.' });
-      return renderTimeline(I18N[state.lang].followTitle, items);
-    }
+  const lang = state.lang;
+  const items = [];
+  if (simple === I18N[state.lang].limited) {
+    items.push({ time: lang === 'zh' ? '治疗后 0–2 年' : '0–2 years after treatment', desc: lang === 'zh' ? '建议每 2–3 个月复诊 1 次，评估病史、体检、胸部/上腹部 CT、症状变化、复发风险和治疗毒性。' : 'Follow up every 2–3 months with history, physical examination, chest/upper abdominal CT, symptom review, recurrence risk and toxicity assessment.' });
+    items.push({ time: lang === 'zh' ? '2 年后' : 'After year 2', desc: lang === 'zh' ? '可逐步改为每 3–6 个月，长期稳定后按年评估，并持续关注第二原发肺癌和治疗后并发症。' : 'Intervals may be widened to every 3–6 months, then annually after long-term stability, while watching for second primary lung cancer and late complications.' });
+  } else {
+    items.push({ time: lang === 'zh' ? '治疗中' : 'On treatment', desc: lang === 'zh' ? '通常每 2–3 个周期评估疗效；获得缓解或稳定后，继续密切追踪胸部、腹部、脑部和症状变化，并按治疗方案调整影像节奏。' : 'Efficacy is commonly assessed every 2–3 cycles; after response or stabilization, continue close thoracic, abdominal, brain and symptom surveillance with imaging intervals adjusted to treatment.' });
+  }
+  items.push({ time: lang === 'zh' ? '脑部监测' : 'Brain surveillance', desc: lang === 'zh' ? 'SCLC 随访建议优先采用脑 MRI；通常第 1 年每 3–4 个月、第 2 年每 6 个月进行脑 MRI（或头颅增强 CT），无论是否接受 PCI，之后按临床需要。' : 'Brain MRI is preferred for SCLC surveillance; brain MRI or contrast-enhanced head CT is commonly performed every 3–4 months in year 1 and every 6 months in year 2 regardless of PCI status, then as clinically indicated.' });
+  items.push({ time: lang === 'zh' ? 'PCI / 脑转移后' : 'After PCI / brain metastases', desc: lang === 'zh' ? '接受 PCI 或脑转移局部治疗后，应持续进行神经认知、神经系统症状和脑 MRI 监测；脑转移局部治疗后前 1 年常每 2–3 个月复查脑 MRI，其后每 3–6 个月。' : 'After PCI or local therapy for brain metastases, continue neurocognitive, neurologic symptom and brain MRI monitoring; after local brain-metastasis therapy, MRI is often repeated every 2–3 months in year 1 and then every 3–6 months.' });
+  items.push({ time: lang === 'zh' ? '免疫治疗中' : 'During immunotherapy', desc: lang === 'zh' ? '建议每 2–3 个周期评估疗效，同时常规监测甲状腺功能、肝功能、肺炎表现、内分泌异常及其他免疫相关不良反应。' : 'Reassess efficacy every 2–3 cycles while monitoring thyroid function, liver function, pneumonitis signals, endocrine toxicity, and other immune-related adverse events.' });
+  return renderTimeline(I18N[state.lang].followTitle, items);
+}
 
     function renderField(field, side) {
       const lang = state.lang;
+      let effectiveField = field;
+      if (side === 'ns' && field.id === 'specialT') {
+        const baseOptions = [{ value: '', zh: '常规浸润性病灶', en: 'Conventional invasive lesion' }];
+        if (['adenocarcinoma', 'squamous'].includes(state.ns.pathology)) {
+          baseOptions.push({ value: 'Tis', zh: '原位病变（Tis；腺癌原位或鳞癌原位）', en: 'In situ lesion (Tis; AIS or SCIS)' });
+        }
+        if (state.ns.pathology === 'adenocarcinoma') {
+          baseOptions.push({ value: 'T1mi', zh: '微浸润腺癌（T1mi）', en: 'Minimally invasive adenocarcinoma (T1mi)' });
+        }
+        if (!baseOptions.some(o => o.value === state.ns.specialT)) state.ns.specialT = '';
+        effectiveField = { ...field, options: baseOptions, hint: { zh: 'T1mi 仅适用于符合定义的微浸润腺癌；Tis 需符合原位腺癌或原位鳞癌等病理定义。', en: 'T1mi is limited to minimally invasive adenocarcinoma; Tis requires appropriate in situ pathology such as AIS or SCIS.' } };
+      }
       const wrap = document.createElement('div');
-      wrap.className = 'field' + (field.full ? ' full' : '');
+      wrap.className = 'field' + (effectiveField.full ? ' full' : '');
       const label = document.createElement('label');
-      label.textContent = field.label[lang];
+      label.textContent = effectiveField.label[lang];
       wrap.appendChild(label);
 
-      if (field.type === 'select') {
+      if (effectiveField.type === 'select') {
         const select = document.createElement('select');
-        select.value = state[side][field.id] ?? '';
-        field.options.forEach(opt => {
+        select.value = state[side][effectiveField.id] ?? '';
+        effectiveField.options.forEach(opt => {
           const option = document.createElement('option');
           option.value = opt.value;
           option.textContent = opt[lang];
-          if ((state[side][field.id] ?? '') === opt.value) option.selected = true;
+          if ((state[side][effectiveField.id] ?? '') === opt.value) option.selected = true;
           select.appendChild(option);
         });
         select.addEventListener('change', e => {
-          state[side][field.id] = e.target.value;
-          renderDynamic();
+          state[side][effectiveField.id] = e.target.value;
+          renderStatic();
         });
         wrap.appendChild(select);
-      } else if (field.type === 'number') {
+      } else if (effectiveField.type === 'number') {
         const input = document.createElement('input');
         input.type = 'number';
-        input.min = field.min;
-        input.max = field.max;
-        input.step = field.step;
-        input.value = state[side][field.id];
+        input.min = effectiveField.min;
+        input.max = effectiveField.max;
+        input.step = effectiveField.step;
+        input.value = state[side][effectiveField.id];
         input.addEventListener('input', e => {
-          state[side][field.id] = Number(e.target.value || 0);
+          state[side][effectiveField.id] = Number(e.target.value || 0);
           renderDynamic();
         });
         wrap.appendChild(input);
-      } else if (field.type === 'chips') {
+      } else if (effectiveField.type === 'chips') {
         const chips = document.createElement('div');
         chips.className = 'chips';
-        field.chips.forEach(item => {
+        effectiveField.chips.forEach(item => {
           const chip = document.createElement('div');
           chip.className = 'chip';
           chip.textContent = item[lang];
@@ -1217,10 +1231,10 @@
         wrap.appendChild(chips);
       }
 
-      if (field.hint) {
+      if (effectiveField.hint) {
         const hint = document.createElement('div');
         hint.className = 'hint';
-        hint.textContent = field.hint[lang];
+        hint.textContent = effectiveField.hint[lang];
         wrap.appendChild(hint);
       }
       return wrap;
@@ -1251,7 +1265,7 @@
     function renderStatic() {
       const t = I18N[state.lang];
       document.documentElement.lang = state.lang === 'zh' ? 'zh-CN' : 'en';
-      document.title = state.lang === 'zh' ? '肺癌分期系统 · 正式双语版' : 'Lung Cancer Staging System · Production Bilingual Edition';
+      document.title = state.lang === 'zh' ? '肺癌分期系统 · TNM第9版核校更新版' : 'Lung Cancer Staging System · TNM 9th Reviewed Update';
       $('heroBadge').textContent = t.heroBadge;
       $('printBtn').textContent = t.printButton;
       $('langSwitch').textContent = t.langButton;
@@ -1298,6 +1312,13 @@
 
     function renderDynamic() {
       const t = I18N[state.lang];
+      if (state.ns.n === 'N2') state.ns.n = 'N2a';
+      if (state.sc.n === 'N2') state.sc.n = 'N2a';
+      if (state.ns.m === 'M1c') state.ns.m = 'M1c1';
+      if (state.sc.m === 'M1c') state.sc.m = 'M1c1';
+      if (state.sc.specialT) state.sc.specialT = '';
+      if (state.ns.specialT === 'T1mi' && state.ns.pathology !== 'adenocarcinoma') state.ns.specialT = '';
+      if (state.ns.specialT === 'Tis' && !['adenocarcinoma', 'squamous'].includes(state.ns.pathology)) state.ns.specialT = '';
       const nsT = calcT(state.ns);
       const nsStage = computeStage(nsT.t, state.ns.n, state.ns.m);
       const nsSeverity = stageSeverity(nsStage);
