@@ -19,13 +19,19 @@ Current production features:
 
 ## Clinical Basis
 
-The current auto-staging engine is primarily built on the stable IASLC / AJCC 8th edition lung cancer TNM framework, while leaving room for a future 9th edition upgrade.
+The current auto-staging engine has been synchronized to the reviewed lung cancer TNM 9th edition content, together with the matching NSCLC / SCLC pathway presentation used in the current release.
 
 The design direction also references:
 
 - NCCN 2025 NSCLC updates
 - CSCO 2024/2025 lung cancer guidance updates
 - Chinese Medical Association 2025 lung cancer guideline
+
+## v1.2.0 Update Notes
+
+- Updated the README clinical-basis wording to reflect the TNM 9th edition positioning used by the current release
+- Synchronized the project description with the latest bilingual standalone HTML deliverable
+- Refreshed the v1.2.0 release messaging for NSCLC / SCLC staging, pathway guidance, and follow-up suggestion content
 
 ## Files
 
