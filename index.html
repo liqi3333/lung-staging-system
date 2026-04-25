@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lung Cancer Staging System · 肺癌分期系统</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --bg: #eef5f8;
+      --panel: #ffffff;
+      --panel-soft: #f8fbfd;
+      --border: #d7e5ec;
+      --primary: #14506d;
+      --primary-2: #2b86a7;
+      --text: #203341;
+      --muted: #667c89;
+      --warn-bg: #fff8e8;
+      --warn-border: #f0dca6;
+      --warn-text: #6f5b22;
+    }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(180deg, #f3f8fb 0%, var(--bg) 100%);
+      color: var(--text);
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+    }
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      background: var(--panel);
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 60px rgba(19, 45, 64, 0.08);
+    }
+    .hero {
+      background: linear-gradient(135deg, #0d4a6b 0%, #1f6e8f 58%, #3a95ab 100%);
+      color: #fff;
+      padding: 28px 30px 22px;
+      position: relative;
+    }
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.14);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .lang-switch {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .print-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 1px solid rgba(255,255,255,0.22);
+    }
+    .lang-switch:hover, .print-btn:hover { background: rgba(255,255,255,0.24); }
+    h1 {
+      margin: 14px 0 0;
+      font-size: 2.08rem;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+    }
+    .subtitle {
+      margin-top: 12px;
+      max-width: 1100px;
+      line-height: 1.78;
+      font-size: 0.98rem;
+      color: rgba(255,255,255,0.96);
+    }
+    .content { padding: 24px 26px 32px; }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .info-card {
+      background: var(--panel-soft);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+    }
+    .info-card h3 {
+      margin: 0 0 7px;
+      color: var(--primary);
+      font-size: 0.93rem;
+    }
+    .info-card p {
+      margin: 0;
+      color: #445966;
+      font-size: 0.86rem;
+      line-height: 1.65;
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .tab-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 11px 18px;
+      background: #edf5f8;
+      color: #1f5773;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.93rem;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(20, 80, 109, 0.18);
+    }
+    .page { display: none; }
+    .page.active { display: block; }
+    .page.page-nsclc .panel,
+    .page.page-nsclc .summary-strip,
+    .page.page-nsclc .box,
+    .page.page-nsclc .result-card {
+      box-shadow: inset 0 0 0 1px rgba(39, 123, 160, 0.04);
+    }
+    .page.page-sclc .panel,
+    .page.page-sclc .summary-strip,
+    .page.page-sclc .box,
+    .page.page-sclc .result-card {
+      box-shadow: inset 0 0 0 1px rgba(93, 93, 166, 0.05);
+    }
+    .page.page-nsclc .panel { border-top: 4px solid #2d83a6; }
+    .page.page-sclc .panel { border-top: 4px solid #6b63a7; }
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+    .summary-pill {
+      background: var(--panel-soft);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 10px 12px;
+      min-height: 72px;
+    }
+    .summary-pill .k {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #6a8290;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .summary-pill .v {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.45;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.22fr 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+    .panel {
+      background: #fbfdfe;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 18px;
+    }
+    .panel h2 {
+      margin: 0 0 14px;
+      color: var(--primary);
+      font-size: 1.08rem;
+    }
+    .section-block {
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .section-block:first-of-type { margin-top: 0; }
+    .section-summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      padding: 14px 16px;
+      background: #f2f8fb;
+      color: #175d7d;
+      font-weight: 800;
+      font-size: 0.96rem;
+    }
+    .section-summary::-webkit-details-marker { display: none; }
+    .section-toggle {
+      font-size: 0.8rem;
+      color: #678290;
+      font-weight: 700;
+    }
+    .section-body { padding: 16px; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 16px;
+    }
+    .field.full { grid-column: 1 / -1; }
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #1d6182;
+      text-transform: uppercase;
+      letter-spacing: 0.25px;
+    }
+    .field select, .field input {
+      width: 100%;
+      border-radius: 15px;
+      border: 1.5px solid #cfdee6;
+      padding: 12px 14px;
+      font-size: 0.94rem;
+      background: #fff;
+      color: var(--text);
+      outline: none;
+    }
+    .field select:focus, .field input:focus {
+      border-color: var(--primary-2);
+      box-shadow: 0 0 0 4px rgba(43, 134, 167, 0.12);
+    }
+    .hint {
+      margin-top: 6px;
+      font-size: 0.81rem;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #f1f8fb;
+      border: 1px solid var(--border);
+      color: #32505f;
+      font-size: 0.82rem;
+    }
+    .result-card {
+      background: linear-gradient(135deg, #edf7fb 0%, #e3f0f6 100%);
+      border: 1px solid #cadde7;
+      border-radius: 24px;
+      padding: 20px 20px 18px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .result-card::after {
+      content: '';
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      pointer-events: none;
+    }
+    .result-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .result-tag {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .severity-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(17, 63, 86, 0.08);
+      color: #285065;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+    .stage-main {
+      font-size: 3.6rem;
+      line-height: 1;
+      color: #113e56;
+      font-weight: 900;
+      margin: 3px 0 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .stage-desc {
+      font-size: 0.96rem;
+      line-height: 1.72;
+      color: #375361;
+      position: relative;
+      z-index: 1;
+    }
+    .result-card.stage-severity-1 { background: linear-gradient(135deg, #e8f7ef 0%, #ddf2e6 100%); border-color: #b9dfc7; }
+    .result-card.stage-severity-2 { background: linear-gradient(135deg, #f4fae5 0%, #ecf4d8 100%); border-color: #d4e6a1; }
+    .result-card.stage-severity-3 { background: linear-gradient(135deg, #fff4da 0%, #fde9c2 100%); border-color: #f0cf86; }
+    .result-card.stage-severity-4 { background: linear-gradient(135deg, #ffe9da 0%, #f9d4bf 100%); border-color: #ecb48f; }
+    .result-card.stage-severity-5 { background: linear-gradient(135deg, #ffe1df 0%, #f6c8c3 100%); border-color: #e59c95; }
+    .result-card.stage-severity-0 { background: linear-gradient(135deg, #eef2f5 0%, #e2e8ee 100%); border-color: #cfd8e2; }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+      position: relative;
+      z-index: 1;
+    }
+    .metric {
+      border-radius: 16px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(20, 79, 108, 0.1);
+      padding: 11px 12px;
+    }
+    .metric .k {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #68808d;
+      margin-bottom: 5px;
+    }
+    .metric .v {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .box {
+      background: var(--panel-soft);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin-top: 12px;
+      color: #35515f;
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+    .box h3 {
+      margin: 0 0 8px;
+      font-size: 0.96rem;
+      color: var(--primary);
+    }
+    .box ul { margin: 8px 0 0; padding-left: 20px; }
+    .box li { margin: 8px 0; }
+    .path-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .path-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 13px;
+      min-height: 100%;
+    }
+    .path-card.primary { border-color: rgba(36, 124, 159, 0.38); background: #f6fbfe; }
+    .path-card.warning { border-color: rgba(220, 153, 81, 0.38); background: #fffaf2; }
+    .path-card h4 {
+      margin: 0 0 8px;
+      font-size: 0.88rem;
+      color: #144d6d;
+    }
+    .path-card p {
+      margin: 0;
+      font-size: 0.86rem;
+      line-height: 1.62;
+      color: #39515f;
+    }
+    .timeline {
+      display: grid;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .time-step {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 12px;
+      align-items: start;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 13px;
+    }
+    .time-step .time {
+      font-size: 0.82rem;
+      font-weight: 900;
+      color: #175c7c;
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
+    }
+    .time-step .desc {
+      font-size: 0.87rem;
+      line-height: 1.65;
+      color: #39515f;
+    }
+    .warn {
+      background: var(--warn-bg);
+      border-color: var(--warn-border);
+      color: var(--warn-text);
+    }
+    .refs {
+      margin-top: 22px;
+      border-radius: 20px;
+      background: #f9fbfc;
+      border: 1px solid var(--border);
+      padding: 16px 18px;
+      font-size: 0.88rem;
+      line-height: 1.72;
+      color: #405965;
+    }
+    .refs h3 {
+      margin: 0 0 8px;
+      color: var(--primary);
+      font-size: 0.96rem;
+    }
+    .refs ul { margin: 8px 0 0; padding-left: 20px; }
+    .refs li { margin: 7px 0; }
+    .footer {
+      margin-top: 18px;
+      text-align: right;
+      color: #728592;
+      font-size: 0.8rem;
+    }
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+      .shell {
+        border: none;
+        box-shadow: none;
+      }
+      .lang-switch,
+      .print-btn,
+      .tabs,
+      .info-grid {
+        display: none !important;
+      }
+      .page:not(.active) { display: none !important; }
+      .section-block,
+      .result-card,
+      .box,
+      .summary-pill,
+      .path-card,
+      .time-step {
+        break-inside: avoid;
+      }
+    }
+    a { color: #0c6991; }
+    @media (max-width: 1040px) {
+      .grid, .info-grid, .metrics, .form-grid, .summary-strip, .path-grid { grid-template-columns: 1fr; }
+      .time-step { grid-template-columns: 1fr; }
+      .stage-main { font-size: 2.8rem; }
+      body { padding: 10px; }
+      .hero, .content { padding-left: 16px; padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="hero">
+      <div class="hero-top">
+        <div class="badge" id="heroBadge"></div>
+        <div class="toolbar-actions">
+          <button class="print-btn" id="printBtn"></button>
+          <button class="lang-switch" id="langSwitch"></button>
+        </div>
+      </div>
+      <h1 id="heroTitle"></h1>
+      <div class="subtitle" id="heroSubtitle"></div>
+    </div>
+
+    <div class="content">
+      <div class="info-grid" id="infoGrid"></div>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="nsclc" id="tabNsclc"></button>
+        <button class="tab-btn" data-tab="sclc" id="tabSclc"></button>
+      </div>
+
+      <section class="page page-nsclc active" id="page-nsclc">
+        <div class="summary-strip" id="nsCaseSummary"></div>
+        <div class="grid">
+          <div class="panel">
+            <h2 id="nsPanelTitle"></h2>
+            <div id="nsSections"></div>
+          </div>
+          <div>
+            <div class="result-card stage-severity-0" id="nsResultCard">
+              <div class="result-head">
+                <div>
+                  <div class="result-tag" id="nsResultTag"></div>
+                </div>
+                <div class="severity-chip" id="nsSeverityChip"></div>
+              </div>
+              <div class="stage-main" id="nsStage"></div>
+              <div class="stage-desc" id="nsSummary"></div>
+              <div class="metrics">
+                <div class="metric"><div class="k" id="metricT"></div><div class="v" id="nsTValue"></div></div>
+                <div class="metric"><div class="k" id="metricN"></div><div class="v" id="nsNValue"></div></div>
+                <div class="metric"><div class="k" id="metricM"></div><div class="v" id="nsMValue"></div></div>
+                <div class="metric"><div class="k" id="metricResect"></div><div class="v" id="nsResectValue"></div></div>
+              </div>
+            </div>
+            <div class="box warn" id="nsReason"></div>
+            <div class="box" id="nsPlan"></div>
+            <div class="box" id="nsFollow"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page page-sclc" id="page-sclc">
+        <div class="summary-strip" id="scCaseSummary"></div>
+        <div class="grid">
+          <div class="panel">
+            <h2 id="scPanelTitle"></h2>
+            <div id="scSections"></div>
+          </div>
+          <div>
+            <div class="result-card stage-severity-0" id="scResultCard">
+              <div class="result-head">
+                <div>
+                  <div class="result-tag" id="scResultTag"></div>
+                </div>
+                <div class="severity-chip" id="scSeverityChip"></div>
+              </div>
+              <div class="stage-main" id="scStage"></div>
+              <div class="stage-desc" id="scSummary"></div>
+              <div class="metrics">
+                <div class="metric"><div class="k" id="scMetricT"></div><div class="v" id="scTValue"></div></div>
+                <div class="metric"><div class="k" id="scMetricN"></div><div class="v" id="scNValue"></div></div>
+                <div class="metric"><div class="k" id="scMetricM"></div><div class="v" id="scMValue"></div></div>
+                <div class="metric"><div class="k" id="scMetricSimple"></div><div class="v" id="scSimpleValue"></div></div>
+              </div>
+            </div>
+            <div class="box warn" id="scReason"></div>
+            <div class="box" id="scPlan"></div>
+            <div class="box" id="scFollow"></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="refs">
+        <h3 id="refsTitle"></h3>
+        <ul id="refsList"></ul>
+      </div>
+      <div class="footer" id="footerText"></div>
+    </div>
+  </div>
+
+  <script>
+    const I18N = {
+      zh: {
+        langButton: 'English',
+        printButton: '打印当前页',
+        heroBadge: '🫁 正式临床辅助版 · 双语一键切换',
+        heroTitle: '肺癌分期系统（正式双语版）',
+        heroSubtitle: '本正式版用于肺癌分期辅助判读与路径梳理：内置中文 / English 一键切换，区分 NSCLC（非小细胞肺癌）与 SCLC（小细胞肺癌）双页面，可自动生成 T / N / M 与总分期，并提供分阶段治疗路径与随访建议。当前分期主逻辑基于 IASLC（国际肺癌研究协会）/ AJCC（美国癌症联合委员会）第8版肺癌 TNM（肿瘤-淋巴结-转移）分期，临床建议参考 NCCN、CSCO 与中华医学会近年更新思路，用于正式临床辅助、教学与流程设计。',
+        infoCards: [
+          { title: '双语模式', body: '支持中英文一键切换，便于门诊沟通、教学展示与国际交流。' },
+          { title: '自动分期', body: '输入肿瘤大小、侵犯特征、N（淋巴结）、M（远处转移）后，自动生成 TNM 与总分期。' },
+          { title: '正式路径', body: '按早期、局晚期、晚期分别给出较完整的治疗路径建议，不再只停留在分期结果。' },
+          { title: '正式随访', body: '纳入术后、局晚期治疗后、晚期系统治疗中，以及 SCLC 特殊场景下的正式随访建议。' }
+        ],
+        tabNsclc: 'NSCLC 页面（非小细胞肺癌）',
+        tabSclc: 'SCLC 页面（小细胞肺癌）',
+        summaryLabels: {
+          pathology: '病理类型',
+          basis: '分期基础',
+          stage: '当前分期',
+          ecog: 'ECOG',
+          driver: '驱动基因',
+          pdl1: 'PD-L1',
+          simple: '简化分期',
+          brain: '脑 MRI'
+        },
+        nsPanelTitle: 'NSCLC（非小细胞肺癌）输入区',
+        scPanelTitle: 'SCLC（小细胞肺癌）输入区',
+        nsResultTag: 'NSCLC（非小细胞肺癌）自动输出',
+        scResultTag: 'SCLC（小细胞肺癌）自动输出',
+        metricT: 'T（原发肿瘤）',
+        metricN: 'N（淋巴结）',
+        metricM: 'M（远处转移）',
+        metricResect: '切除性',
+        scMetricSimple: '简化分期（局限期/广泛期）',
+        refsTitle: '参考依据（用于系统设计，不替代正式指南全文）',
+        footerText: '说明：本工具用于临床辅助判断、教学与流程设计，不替代 MDT（多学科团队）讨论、影像判读、病理结论或正式临床决策。',
+        sectionTitles: {
+          basic: '一、基础设置',
+          tnm: '二、TNM 关键字段',
+          route: '三、治疗路径关键字段'
+        },
+        nsSummary: (basis, t, n, m, stage) => `${basis} · NSCLC（非小细胞肺癌）· 自动生成 <strong>${t}${n}${m}</strong>，当前总分期为 <strong>${stage}</strong>。`,
+        scSummary: (basis, t, n, m, stage, simple) => `${basis} · SCLC（小细胞肺癌）· 自动生成 <strong>${t}${n}${m}</strong>，TNM 总分期为 <strong>${stage}</strong>，简化输出为 <strong>${simple}</strong>。`,
+        tReasonTitle: 'T 分期计算说明：',
+        nsUpgradeNote: '分期说明：当前总分期基于第8版肺癌 TNM 规则自动生成；如后续正式切换第9版，可继续纳入新的 N2 / M 细分与分期重排。',
+        scUpgradeNote: 'SCLC 说明：本正式版已采用 TNM + 局限期/广泛期双轨输出；其中 M0 且胸部放疗野可完整包容全部病灶者更倾向局限期，M1 或放疗野无法完整包容者更倾向广泛期，最终仍需结合影像范围、放疗计划可行性与 MDT（多学科团队）结论综合判断。',
+        planTitle: '正式治疗路径建议',
+        followTitle: '正式随访建议',
+        severityLabels: {
+          0: '待复核',
+          1: '早期低危',
+          2: '中早期',
+          3: '局部进展',
+          4: '高危局晚期',
+          5: '晚期高危'
+        },
+        nsBasisClinical: '临床分期（cTNM）',
+        nsBasisPathologic: '病理分期（pTNM）',
+        scBasisClinical: '临床分期（cTNM）',
+        scBasisPathologic: '病理分期（pTNM）',
+        limited: '局限期',
+        extensive: '广泛期'
+      },
+      en: {
+        langButton: '中文',
+        printButton: 'Print current page',
+        heroBadge: '🫁 Production Version · One-Click Bilingual Switch',
+        heroTitle: 'Lung Cancer Staging System (Production Bilingual Edition)',
+        heroSubtitle: 'This is a directly usable production HTML release with one-click Chinese / English switching, separate NSCLC and SCLC pages, automatic T / N / M plus stage grouping, and built-in guidance for surgery, chemoradiotherapy, targeted therapy, immunotherapy, and follow-up. The current staging engine is primarily based on the stable IASLC / AJCC 8th edition lung TNM framework, with upgrade room reserved for the 9th edition.',
+        infoCards: [
+          { title: 'Bilingual Mode', body: 'One-click Chinese / English switching for clinic demonstrations, teaching, and international communication.' },
+          { title: 'Auto Staging', body: 'Enter tumor size, invasion features, N, and M to automatically generate TNM and stage grouping.' },
+          { title: 'Clinical Pathways', body: 'The output goes beyond stage labels and suggests early-stage, locally advanced, and metastatic treatment directions.' },
+          { title: 'Follow-Up', body: 'Includes follow-up rhythm suggestions after surgery, after locally advanced treatment, and during systemic therapy.' }
+        ],
+        tabNsclc: 'NSCLC Page',
+        tabSclc: 'SCLC Page',
+        summaryLabels: {
+          pathology: 'Pathology',
+          basis: 'Staging basis',
+          stage: 'Current stage',
+          ecog: 'ECOG',
+          driver: 'Driver',
+          pdl1: 'PD-L1',
+          simple: 'Simple stage',
+          brain: 'Brain MRI'
+        },
+        nsPanelTitle: 'NSCLC Input Panel',
+        scPanelTitle: 'SCLC Input Panel',
+        nsResultTag: 'NSCLC Auto Output',
+        scResultTag: 'SCLC Auto Output',
+        metricT: 'T',
+        metricN: 'N',
+        metricM: 'M',
+        metricResect: 'Resectability',
+        scMetricSimple: 'Simple Stage',
+        refsTitle: 'References (for system design, not a substitute for full official guidelines)',
+        footerText: 'Note: This tool is intended for clinical support, teaching, and workflow design. It does not replace MDT discussion, imaging interpretation, pathology conclusions, or formal clinical decision-making.',
+        sectionTitles: {
+          basic: '1. Basic Settings',
+          tnm: '2. Key TNM Inputs',
+          route: '3. Treatment Pathway Inputs'
+        },
+        nsSummary: (basis, t, n, m, stage) => `${basis} · NSCLC · Automatically generated <strong>${t}${n}${m}</strong>, with current overall stage <strong>${stage}</strong>.`,
+        scSummary: (basis, t, n, m, stage, simple) => `${basis} · SCLC · Automatically generated <strong>${t}${n}${m}</strong>, TNM stage <strong>${stage}</strong>, and simple clinical output <strong>${simple}</strong>.`,
+        tReasonTitle: 'How T was generated:',
+        nsUpgradeNote: '9th edition upgrade slot: future versions can add the new N2 / M subdivisions and stage regrouping from the 9th edition proposal.',
+        scUpgradeNote: 'SCLC note: the production path should continue to preserve dual output using both TNM and limited-stage / extensive-stage classification.',
+        planTitle: 'Treatment Pathway Suggestion',
+        followTitle: 'Follow-Up Suggestion',
+        severityLabels: {
+          0: 'Review needed',
+          1: 'Early low risk',
+          2: 'Early-intermediate',
+          3: 'Locally advanced',
+          4: 'High-risk local',
+          5: 'Advanced high risk'
+        },
+        nsBasisClinical: 'Clinical stage (cTNM)',
+        nsBasisPathologic: 'Pathologic stage (pTNM)',
+        scBasisClinical: 'Clinical stage (cTNM)',
+        scBasisPathologic: 'Pathologic stage (pTNM)',
+        limited: 'Limited-stage',
+        extensive: 'Extensive-stage'
+      }
+    };
+
+    const REFERENCES = [
+      { zh: 'IASLC（国际肺癌研究协会）/ AJCC（美国癌症联合委员会）第8版肺癌分期基础', en: 'IASLC / AJCC 8th edition lung staging foundation', url: 'https://pubmed.ncbi.nlm.nih.gov/27780786/' },
+      { zh: '第9版肺癌 TNM（肿瘤-淋巴结-转移）提案', en: 'Proposed 9th edition TNM classification for lung cancer', url: 'https://pubmed.ncbi.nlm.nih.gov/38885896/' },
+      { zh: 'NCCN（美国国家综合癌症网络）NSCLC 指南更新 Version 7.2025', en: 'NCCN Guidelines Insights: NSCLC Version 7.2025', url: 'https://pubmed.ncbi.nlm.nih.gov/40930154/' },
+      { zh: 'CSCO（中国临床肿瘤学会）2024 NSCLC 晚期更新', en: 'CSCO 2024 advanced NSCLC update', url: 'https://pubmed.ncbi.nlm.nih.gov/39995197/' },
+      { zh: 'CSCO（中国临床肿瘤学会）2024 NSCLC 早期 / 局晚期更新', en: 'CSCO 2024 early / locally advanced NSCLC update', url: 'https://pubmed.ncbi.nlm.nih.gov/39995198/' },
+      { zh: '中华医学会肺癌临床诊疗指南（2025版）', en: 'Chinese Medical Association guideline for lung cancer (2025 edition)', url: 'https://pubmed.ncbi.nlm.nih.gov/40796288/' }
+    ];
+
+    const SIZE_OPTIONS = [
+      { value: '0.5', zh: '≤1 cm（T1a）', en: '≤1 cm (T1a)' },
+      { value: '1.5', zh: '>1–2 cm（T1b）', en: '>1–2 cm (T1b)' },
+      { value: '2.5', zh: '>2–3 cm（T1c）', en: '>2–3 cm (T1c)' },
+      { value: '3.5', zh: '>3–4 cm（T2a）', en: '>3–4 cm (T2a)' },
+      { value: '4.5', zh: '>4–5 cm（T2b）', en: '>4–5 cm (T2b)' },
+      { value: '6', zh: '>5–7 cm（T3）', en: '>5–7 cm (T3)' },
+      { value: '8', zh: '>7 cm（T4）', en: '>7 cm (T4)' }
+    ];
+
+    const ECOG_OPTIONS = [
+      { value: '0', zh: '0（活动完全正常）', en: '0 (fully active)' },
+      { value: '1', zh: '1（有轻度症状，但可从事轻体力活动）', en: '1 (restricted in strenuous activity only)' },
+      { value: '2', zh: '2（可生活自理，但不能工作；白天卧床少于50%）', en: '2 (ambulatory, self-care, unable to work)' },
+      { value: '3', zh: '3（仅部分生活自理；白天卧床超过50%）', en: '3 (limited self-care, in bed/chair >50% of daytime)' },
+      { value: '4', zh: '4（完全失能，完全卧床或卧椅）', en: '4 (completely disabled)' }
+    ];
+
+    const NS_PATHOLOGY_OPTIONS = [
+      { value: 'adenocarcinoma', zh: '腺癌（Adenocarcinoma）', en: 'Adenocarcinoma' },
+      { value: 'squamous', zh: '鳞癌（Squamous cell carcinoma）', en: 'Squamous cell carcinoma' },
+      { value: 'adenosquamous', zh: '腺鳞癌（Adenosquamous carcinoma）', en: 'Adenosquamous carcinoma' },
+      { value: 'largecell', zh: '大细胞癌（Large cell carcinoma）', en: 'Large cell carcinoma' },
+      { value: 'sarcomatoid', zh: '肉瘤样癌（Sarcomatoid carcinoma）', en: 'Sarcomatoid carcinoma' },
+      { value: 'other', zh: '其他非小细胞肺癌', en: 'Other NSCLC subtype' }
+    ];
+
+    const SC_PATHOLOGY_OPTIONS = [
+      { value: 'smallcell', zh: '小细胞癌（Small cell carcinoma）', en: 'Small cell carcinoma' },
+      { value: 'combined', zh: '复合性小细胞癌（Combined SCLC）', en: 'Combined SCLC' },
+      { value: 'neuroendocrine', zh: '高级别神经内分泌癌（High-grade neuroendocrine carcinoma）', en: 'High-grade neuroendocrine carcinoma' },
+      { value: 'other', zh: '其他小细胞肺癌相关类型', en: 'Other SCLC-related subtype' }
+    ];
+
+    const NS_SCHEMA = [
+      {
+        key: 'basic',
+        fields: [
+          { id: 'basis', type: 'select', label: { zh: '分期基础', en: 'Staging basis' }, options: [
+            { value: 'clinical', zh: '临床分期（cTNM，临床 TNM）', en: 'Clinical stage (cTNM)' },
+            { value: 'pathologic', zh: '病理分期（pTNM，病理 TNM）', en: 'Pathologic stage (pTNM)' }
+          ]},
+          { id: 'pathology', type: 'select', label: { zh: '病理类型', en: 'Pathology type' }, options: NS_PATHOLOGY_OPTIONS },
+          { id: 'resectability', type: 'select', label: { zh: '可切除性评估', en: 'Resectability assessment' }, options: [
+            { value: 'resectable', zh: '可切除', en: 'Resectable' },
+            { value: 'borderline', zh: '边界可切除', en: 'Borderline resectable' },
+            { value: 'unresectable', zh: '不可切除', en: 'Unresectable' }
+          ]},
+          { id: 'specialT', type: 'select', label: { zh: '特殊病理病灶', en: 'Special lesion category' }, options: [
+            { value: '', zh: '常规浸润性病灶', en: 'Conventional invasive lesion' },
+            { value: 'Tis', zh: '原位病变（Tis，原位癌）', en: 'In situ lesion (Tis)' },
+            { value: 'T1mi', zh: '微浸润病灶（T1mi，微浸润）', en: 'Minimally invasive lesion (T1mi)' }
+          ]},
+          { id: 'ecog', type: 'select', label: { zh: 'ECOG PS（体能状态评分）', en: 'ECOG PS' }, options: ECOG_OPTIONS, hint: { zh: 'ECOG 0–4 分分别代表从活动正常到完全卧床的体能状态。', en: 'ECOG 0–4 describes performance status from fully active to completely disabled.' } }
+        ]
+      },
+      {
+        key: 'tnm',
+        fields: [
+          { id: 'size', type: 'select', label: { zh: '肿瘤最大直径（按 T 分期下拉选择）', en: 'Tumor maximum diameter (T-based dropdown)' }, options: SIZE_OPTIONS, hint: { zh: 'T 分期核心先按肿瘤最大直径分层：T1a ≤1 cm，T1b >1–2 cm，T1c >2–3 cm，T2a >3–4 cm，T2b >4–5 cm，T3 >5–7 cm，T4 >7 cm；若存在更高级别侵犯特征，则按更高 T 分期计算。', en: 'The T descriptor is first grouped by tumor size, then upgraded when higher-level invasion features are present.' } },
+          { id: 't2', type: 'select', label: { zh: 'T2 升级特征（局部进展）', en: 'T2-upgrading feature' }, options: [
+            { value: 'none', zh: '无明确 T2 特征', en: 'No clear T2 feature' },
+            { value: 'T2', zh: '脏层胸膜 / 主支气管 / 肺不张（T2）', en: 'Visceral pleura / main bronchus / atelectasis (T2)' }
+          ]},
+          { id: 't3', type: 'select', label: { zh: 'T3 升级特征（局部侵犯）', en: 'T3-upgrading feature' }, full: true, options: [
+            { value: 'none', zh: '无明确 T3 特征', en: 'No clear T3 feature' },
+            { value: 'T3', zh: '胸壁 / 壁层心包 / 膈神经受侵，或同肺叶结节（T3）', en: 'Chest wall / parietal pericardium / phrenic nerve invasion, or same-lobe nodule (T3)' }
+          ]},
+          { id: 't4', type: 'select', label: { zh: 'T4 升级特征（高级别局部侵犯）', en: 'T4-upgrading feature' }, full: true, options: [
+            { value: 'none', zh: '无明确 T4 特征', en: 'No clear T4 feature' },
+            { value: 'T4', zh: '纵隔 / 大血管 / 气管 / 隆突 / 食管 / 椎体 / 同侧不同肺叶结节（T4）', en: 'Mediastinum / great vessels / trachea / carina / esophagus / vertebral body / different ipsilateral lobe nodule (T4)' }
+          ]},
+          { id: 'n', type: 'select', label: { zh: 'N 分期（淋巴结转移）', en: 'N descriptor' }, options: [
+            { value: 'N0', zh: 'N0（无区域淋巴结转移）', en: 'N0 (no regional nodal metastasis)' },
+            { value: 'N1', zh: 'N1（同侧肺门 / 肺内 / 支气管旁淋巴结转移）', en: 'N1 (ipsilateral hilar / intrapulmonary / peribronchial nodes)' },
+            { value: 'N2', zh: 'N2（同侧纵隔 / 隆突下淋巴结转移）', en: 'N2 (ipsilateral mediastinal / subcarinal nodes)' },
+            { value: 'N3', zh: 'N3（对侧纵隔 / 锁骨上等淋巴结转移）', en: 'N3 (contralateral mediastinal / supraclavicular etc.)' }
+          ]},
+          { id: 'm', type: 'select', label: { zh: 'M 分期（远处转移）', en: 'M descriptor' }, options: [
+            { value: 'M0', zh: 'M0（无远处转移）', en: 'M0 (no distant metastasis)' },
+            { value: 'M1a', zh: 'M1a（胸膜结节 / 恶性胸腔积液 / 对侧肺结节）', en: 'M1a (pleural nodules / malignant effusion / contralateral pulmonary nodule)' },
+            { value: 'M1b', zh: 'M1b（单发胸外转移）', en: 'M1b (single extrathoracic metastasis)' },
+            { value: 'M1c', zh: 'M1c（多发胸外转移）', en: 'M1c (multiple extrathoracic metastases)' }
+          ]}
+        ]
+      },
+      {
+        key: 'route',
+        fields: [
+          { id: 'driver', type: 'select', label: { zh: '驱动基因状态（靶向相关）', en: 'Driver alteration status' }, options: [
+            { value: 'pending', zh: '待完善 / 未完成检测', en: 'Pending / not yet completed' },
+            { value: 'EGFR', zh: 'EGFR 突变（表皮生长因子受体）', en: 'EGFR mutation' },
+            { value: 'ALK', zh: 'ALK 重排（间变性淋巴瘤激酶）', en: 'ALK rearrangement' },
+            { value: 'ROS1', zh: 'ROS1 重排', en: 'ROS1 rearrangement' },
+            { value: 'KRAS', zh: 'KRAS 突变', en: 'KRAS mutation' },
+            { value: 'METex14', zh: 'MET exon14 跳跃突变', en: 'MET exon14' },
+            { value: 'RET', zh: 'RET 融合', en: 'RET fusion' },
+            { value: 'none', zh: '未见明确驱动', en: 'No clear driver detected' }
+          ]},
+          { id: 'pdl1', type: 'select', label: { zh: 'PD-L1（程序性死亡配体1）', en: 'PD-L1' }, options: [
+            { value: 'unknown', zh: '未知', en: 'Unknown' },
+            { value: 'ge50', zh: '≥50%', en: '≥50%' },
+            { value: '1to49', zh: '1–49%', en: '1–49%' },
+            { value: 'lt1', zh: '<1%', en: '<1%' }
+          ]},
+          { id: 'output', type: 'chips', full: true, label: { zh: '本页输出', en: 'This page outputs' }, chips: [
+            { zh: '自动 T / N / M（肿瘤 / 淋巴结 / 转移）', en: 'Automatic T / N / M' },
+            { zh: '自动总分期', en: 'Automatic stage grouping' },
+            { zh: '治疗路径建议', en: 'Treatment pathway suggestion' },
+            { zh: '随访建议', en: 'Follow-up suggestion' }
+          ]}
+        ]
+      }
+    ];
+
+    const SC_SCHEMA = [
+      {
+        key: 'basic',
+        fields: [
+          { id: 'basis', type: 'select', label: { zh: '分期基础', en: 'Staging basis' }, options: [
+            { value: 'clinical', zh: '临床分期（cTNM，临床 TNM）', en: 'Clinical stage (cTNM)' },
+            { value: 'pathologic', zh: '病理分期（pTNM，病理 TNM）', en: 'Pathologic stage (pTNM)' }
+          ]},
+          { id: 'pathology', type: 'select', label: { zh: '病理类型', en: 'Pathology type' }, options: SC_PATHOLOGY_OPTIONS },
+          { id: 'ecog', type: 'select', label: { zh: 'ECOG PS（体能状态评分）', en: 'ECOG PS' }, options: ECOG_OPTIONS, hint: { zh: 'ECOG 0–4 分分别代表从活动正常到完全卧床的体能状态。', en: 'ECOG 0–4 describes performance status from fully active to completely disabled.' } },
+          { id: 'specialT', type: 'select', label: { zh: '特殊病理病灶', en: 'Special lesion category' }, options: [
+            { value: '', zh: '常规病灶', en: 'Conventional lesion' },
+            { value: 'Tis', zh: '原位病变（Tis，原位癌）', en: 'In situ lesion (Tis)' },
+            { value: 'T1mi', zh: '微浸润病灶（T1mi，微浸润）', en: 'Minimally invasive lesion (T1mi)' }
+          ]},
+          { id: 'size', type: 'select', label: { zh: '肿瘤最大直径（按 T 分期下拉选择）', en: 'Tumor maximum diameter (T-based dropdown)' }, options: SIZE_OPTIONS, hint: { zh: 'T 分期核心先按肿瘤最大直径分层：T1a ≤1 cm，T1b >1–2 cm，T1c >2–3 cm，T2a >3–4 cm，T2b >4–5 cm，T3 >5–7 cm，T4 >7 cm；若存在更高级别侵犯特征，则按更高 T 分期计算。', en: 'The T descriptor is first grouped by tumor size, then upgraded when higher-level invasion features are present.' } }
+        ]
+      },
+      {
+        key: 'tnm',
+        fields: [
+          { id: 't2', type: 'select', label: { zh: 'T2 升级特征（局部进展）', en: 'T2-upgrading feature' }, options: [
+            { value: 'none', zh: '无', en: 'None' },
+            { value: 'T2', zh: '脏层胸膜 / 主支气管 / 肺不张（T2）', en: 'Visceral pleura / main bronchus / atelectasis (T2)' }
+          ]},
+          { id: 't3', type: 'select', label: { zh: 'T3 升级特征（局部侵犯）', en: 'T3-upgrading feature' }, options: [
+            { value: 'none', zh: '无', en: 'None' },
+            { value: 'T3', zh: '胸壁 / 壁层心包 / 膈神经 / 同肺叶结节（T3）', en: 'Chest wall / parietal pericardium / phrenic nerve / same-lobe nodule (T3)' }
+          ]},
+          { id: 't4', type: 'select', label: { zh: 'T4 升级特征（高级别局部侵犯）', en: 'T4-upgrading feature' }, full: true, options: [
+            { value: 'none', zh: '无', en: 'None' },
+            { value: 'T4', zh: '纵隔 / 大血管 / 气管 / 隆突 / 食管 / 椎体 / 同侧不同肺叶结节（T4）', en: 'Mediastinum / great vessels / trachea / carina / esophagus / vertebral body / different ipsilateral lobe nodule (T4)' }
+          ]},
+          { id: 'n', type: 'select', label: { zh: 'N 分期（淋巴结转移）', en: 'N descriptor' }, options: [
+            { value: 'N0', zh: 'N0（无区域淋巴结转移）', en: 'N0' },
+            { value: 'N1', zh: 'N1（同侧肺门 / 肺内 / 支气管旁淋巴结转移）', en: 'N1' },
+            { value: 'N2', zh: 'N2（同侧纵隔 / 隆突下淋巴结转移）', en: 'N2' },
+            { value: 'N3', zh: 'N3（对侧纵隔 / 锁骨上等淋巴结转移）', en: 'N3' }
+          ]},
+          { id: 'm', type: 'select', label: { zh: 'M 分期（远处转移）', en: 'M descriptor' }, options: [
+            { value: 'M0', zh: 'M0（无远处转移）', en: 'M0' },
+            { value: 'M1a', zh: 'M1a（胸膜结节 / 恶性胸腔积液 / 对侧肺结节）', en: 'M1a' },
+            { value: 'M1b', zh: 'M1b（单发胸外转移）', en: 'M1b' },
+            { value: 'M1c', zh: 'M1c（多发胸外转移）', en: 'M1c' }
+          ]},
+          { id: 'limited', type: 'select', label: { zh: '胸部放疗野是否可包容全部病灶（局限期/广泛期判断）', en: 'Can a thoracic RT field encompass all disease?' }, full: true, options: [
+            { value: 'yes', zh: '是（倾向局限期）', en: 'Yes (favors limited-stage)' },
+            { value: 'no', zh: '否（倾向广泛期）', en: 'No (favors extensive-stage)' }
+          ], hint: { zh: 'SCLC（小细胞肺癌）常需同时参考 TNM（肿瘤-淋巴结-转移）与“局限期 / 广泛期”双轨分期。', en: 'SCLC commonly uses both TNM and the dual-track limited-stage / extensive-stage framework.' } }
+        ]
+      },
+      {
+        key: 'route',
+        fields: [
+          { id: 'brain', type: 'select', label: { zh: '脑 MRI（头颅磁共振）', en: 'Brain MRI' }, options: [
+            { value: 'done', zh: '已完成评估', en: 'Already completed' },
+            { value: 'pending', zh: '待完善', en: 'Pending' }
+          ]},
+          { id: 'symptoms', type: 'select', label: { zh: '症状负荷', en: 'Symptom burden' }, options: [
+            { value: 'moderate', zh: '一般', en: 'Moderate' },
+            { value: 'high', zh: '较重', en: 'High' }
+          ]},
+          { id: 'output', type: 'chips', full: true, label: { zh: '本页输出', en: 'This page outputs' }, chips: [
+            { zh: '自动 T / N / M（肿瘤 / 淋巴结 / 转移）', en: 'Automatic T / N / M' },
+            { zh: 'TNM + 局限期/广泛期', en: 'TNM + limited/extensive stage' },
+            { zh: '治疗路径建议', en: 'Treatment pathway suggestion' },
+            { zh: '随访建议', en: 'Follow-up suggestion' }
+          ]}
+        ]
+      }
+    ];
+
+    const state = {
+      lang: localStorage.getItem('lung-staging-lang') || 'zh',
+      tab: 'nsclc',
+      ns: {
+        basis: 'clinical', pathology: 'adenocarcinoma', resectability: 'resectable', specialT: '', ecog: '1', size: '3.5', t2: 'none', t3: 'none', t4: 'none', n: 'N0', m: 'M0', driver: 'pending', pdl1: 'unknown'
+      },
+      sc: {
+        basis: 'clinical', pathology: 'smallcell', ecog: '1', specialT: '', size: '4.5', t2: 'none', t3: 'none', t4: 'none', n: 'N0', m: 'M0', limited: 'yes', brain: 'done', symptoms: 'moderate'
+      }
+    };
+
+    const tOrder = ['Tis','T1mi','T1a','T1b','T1c','T2a','T2b','T3','T4'];
+    const $ = id => document.getElementById(id);
+
+    function maxT(list) {
+      return list.reduce((best, item) => tOrder.indexOf(item) > tOrder.indexOf(best) ? item : best, list[0]);
+    }
+    function sizeToT(size) {
+      if (size > 7) return 'T4';
+      if (size > 5) return 'T3';
+      if (size > 4) return 'T2b';
+      if (size > 3) return 'T2a';
+      if (size > 2) return 'T1c';
+      if (size > 1) return 'T1b';
+      return 'T1a';
+    }
+    function isT1(t) { return ['T1mi', 'T1a', 'T1b', 'T1c'].includes(t); }
+    function isT2(t) { return ['T2a', 'T2b'].includes(t); }
+    function computeStage(t, n, m) {
+      if (m === 'M1c') return 'IVB';
+      if (m === 'M1a' || m === 'M1b') return 'IVA';
+      if (t === 'Tis' && n === 'N0') return '0';
+      if ((t === 'T1mi' || t === 'T1a') && n === 'N0') return 'IA1';
+      if (t === 'T1b' && n === 'N0') return 'IA2';
+      if (t === 'T1c' && n === 'N0') return 'IA3';
+      if (t === 'T2a' && n === 'N0') return 'IB';
+      if (t === 'T2b' && n === 'N0') return 'IIA';
+      if ((isT1(t) || isT2(t)) && n === 'N1') return 'IIB';
+      if (t === 'T3' && n === 'N0') return 'IIB';
+      if ((isT1(t) || isT2(t)) && n === 'N2') return 'IIIA';
+      if (t === 'T3' && n === 'N1') return 'IIIA';
+      if (t === 'T4' && (n === 'N0' || n === 'N1')) return 'IIIA';
+      if ((isT1(t) || isT2(t)) && n === 'N3') return 'IIIB';
+      if ((t === 'T3' || t === 'T4') && n === 'N2') return 'IIIB';
+      if ((t === 'T3' || t === 'T4') && n === 'N3') return 'IIIC';
+      return 'Needs review';
+    }
+
+    function calcT(data) {
+      if (data.specialT) {
+        return {
+          t: data.specialT,
+          reason: state.lang === 'zh' ? `特殊病灶直接定义为 ${data.specialT}` : `Special lesion directly defines T as ${data.specialT}`
+        };
+      }
+      const base = sizeToT(Number(data.size || 0));
+      const list = [base];
+      const parts = [state.lang === 'zh' ? `按肿瘤最大径 ${data.size} cm 计算基础 T 值：${base}` : `Base T from maximum tumor diameter ${data.size} cm: ${base}`];
+      if (data.t2 === 'T2') { list.push('T2a'); parts.push(state.lang === 'zh' ? '存在 T2 升级特征' : 'T2-upgrading feature present'); }
+      if (data.t3 === 'T3') { list.push('T3'); parts.push(state.lang === 'zh' ? '存在 T3 升级特征' : 'T3-upgrading feature present'); }
+      if (data.t4 === 'T4') { list.push('T4'); parts.push(state.lang === 'zh' ? '存在 T4 升级特征' : 'T4-upgrading feature present'); }
+      return { t: maxT(list), reason: parts.join(state.lang === 'zh' ? '；' : '; ') };
+    }
+
+    function basisText(side) {
+      const lang = I18N[state.lang];
+      if (side === 'ns') return state.ns.basis === 'clinical' ? lang.nsBasisClinical : lang.nsBasisPathologic;
+      return state.sc.basis === 'clinical' ? lang.scBasisClinical : lang.scBasisPathologic;
+    }
+
+    function resectText() {
+      const map = {
+        zh: { resectable: '可切除', borderline: '边界可切除', unresectable: '不可切除' },
+        en: { resectable: 'Resectable', borderline: 'Borderline resectable', unresectable: 'Unresectable' }
+      };
+      return map[state.lang][state.ns.resectability];
+    }
+
+    function pathologyText(side) {
+      const field = side === 'ns' ? NS_SCHEMA[0].fields[1] : SC_SCHEMA[0].fields[1];
+      const value = side === 'ns' ? state.ns.pathology : state.sc.pathology;
+      const option = field.options.find(o => o.value === value);
+      return option ? option[state.lang] : value;
+    }
+    function driverText() {
+      const field = NS_SCHEMA[2].fields[0];
+      const option = field.options.find(o => o.value === state.ns.driver);
+      return option ? option[state.lang] : state.ns.driver;
+    }
+    function pdl1Text() {
+      const field = NS_SCHEMA[2].fields[1];
+      const option = field.options.find(o => o.value === state.ns.pdl1);
+      return option ? option[state.lang] : state.ns.pdl1;
+    }
+    function brainText() {
+      const field = SC_SCHEMA[2].fields[0];
+      const option = field.options.find(o => o.value === state.sc.brain);
+      return option ? option[state.lang] : state.sc.brain;
+    }
+    function symptomText() {
+      const field = SC_SCHEMA[2].fields[1];
+      const option = field.options.find(o => o.value === state.sc.symptoms);
+      return option ? option[state.lang] : state.sc.symptoms;
+    }
+
+    function simpleSclcStage() {
+      if (state.sc.m !== 'M0') return I18N[state.lang].extensive;
+      return state.sc.limited === 'yes' ? I18N[state.lang].limited : I18N[state.lang].extensive;
+    }
+
+    function stageSeverity(stage) {
+      if (['0','IA1','IA2','IA3'].includes(stage)) return 1;
+      if (['IB','IIA'].includes(stage)) return 2;
+      if (['IIB','IIIA'].includes(stage)) return 3;
+      if (['IIIB','IIIC'].includes(stage)) return 4;
+      if (['IVA','IVB'].includes(stage)) return 5;
+      return 0;
+    }
+
+    function renderSummaryStrip(targetId, items) {
+      const target = $(targetId);
+      target.innerHTML = items.map(item => `
+        <div class="summary-pill">
+          <div class="k">${item.label}</div>
+          <div class="v">${item.value}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderPathCards(title, cards) {
+      return `<h3>${title}</h3><div class="path-grid">${cards.map(card => `
+        <div class="path-card ${card.tone || ''}">
+          <h4>${card.title}</h4>
+          <p>${card.body}</p>
+        </div>
+      `).join('')}</div>`;
+    }
+
+    function renderTimeline(title, items) {
+      return `<h3>${title}</h3><div class="timeline">${items.map(item => `
+        <div class="time-step">
+          <div class="time">${item.time}</div>
+          <div class="desc">${item.desc}</div>
+        </div>
+      `).join('')}</div>`;
+    }
+
+    function nsPlan(stage) {
+      const lang = state.lang;
+      const pathology = pathologyText('ns');
+      const cards = [];
+      if (['0','IA1','IA2','IA3'].includes(stage)) {
+        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '以根治性手术切除为首选，建议同时完成系统性淋巴结取样或清扫；对无法耐受手术者，可评估 SBRT（立体定向放疗）或消融治疗。' : 'Curative-intent surgical resection with systematic nodal sampling/dissection is preferred; consider SBRT or ablation if surgery is not feasible.' });
+        cards.push({ title: lang === 'zh' ? '围术期策略' : 'Perioperative strategy', body: lang === 'zh' ? 'IA 期通常以手术为主，需结合切缘、淋巴结与高危病理因素决定是否进一步处理。' : 'Stage IA disease is usually surgery-dominant, with further decisions guided by margins, nodal status, and high-risk pathology.' });
+      } else if (['IB','IIA'].includes(stage)) {
+        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '仍以手术切除为核心；IB 高危因素或 IIA 患者通常需评估辅助化疗。' : 'Surgery remains central; adjuvant chemotherapy should be considered in high-risk IB or IIA disease.' });
+        cards.push({ title: lang === 'zh' ? '围术期补充' : 'Perioperative note', body: lang === 'zh' ? '对存在高危病理因素、淋巴血管侵犯或驱动基因阳性的患者，应进一步评估辅助治疗与个体化药物路径。' : 'High-risk pathology, lymphovascular invasion, or driver-positive disease should trigger individualized adjuvant planning.' });
+      } else if (['IIB','IIIA'].includes(stage)) {
+        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? `当前切除性评估为“${resectText()}”，建议进入 MDT（多学科团队）讨论。可切除或边界可切除病例，优先考虑新辅助系统治疗 ± 手术；不可切除者转入局晚期根治性放化疗路径。` : `Current resectability is “${resectText()}”; MDT review is recommended. Resectable or borderline-resectable disease generally favors neoadjuvant systemic therapy ± surgery, whereas unresectable disease should move to definitive chemoradiotherapy pathways.` });
+        cards.push({ title: lang === 'zh' ? '关键判断点' : 'Key decision points', body: lang === 'zh' ? '需综合纵隔淋巴结负荷、病灶范围、肺功能和手术耐受性，决定是否进入手术路径。' : 'Mediastinal nodal burden, extent of disease, pulmonary reserve, and surgical fitness should guide the decision on surgery.' });
+      } else if (['IIIB','IIIC'].includes(stage)) {
+        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '多数属于不可切除局晚期 NSCLC，标准路径通常为同步放化疗；完成后若无进展且条件合适，可评估巩固免疫治疗。' : 'Most cases represent unresectable locally advanced NSCLC, typically managed with concurrent chemoradiotherapy followed by consolidation immunotherapy when appropriate.' });
+        cards.push({ title: lang === 'zh' ? '实施重点' : 'Implementation focus', body: lang === 'zh' ? '治疗前应完成分期复核、靶区评估、肺功能和器官功能评估，并根据耐受性决定同步或序贯方案。' : 'Reconfirm stage, target volume, pulmonary function, and organ reserve before selecting concurrent versus sequential treatment.' });
+      } else if (['IVA','IVB'].includes(stage)) {
+        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '晚期 NSCLC 应先完成分子分型与 PD-L1 评估，再根据驱动基因状态、PD-L1 水平、症状负荷与转移范围决定靶向治疗、免疫治疗、化疗联合方案或姑息支持治疗。' : 'Advanced NSCLC should start with full molecular profiling and PD-L1 evaluation, then branch into targeted therapy, immunotherapy, combination systemic therapy, or palliative care according to biomarkers and disease burden.' });
+        cards.push({ title: lang === 'zh' ? '寡转移补充' : 'Oligometastatic note', body: lang === 'zh' ? '对部分寡转移或局部症状突出的患者，可结合局部消融、放疗或手术进行整合治疗。' : 'Selected oligometastatic or symptom-dominant lesions may benefit from integrated local therapy such as ablation, radiotherapy, or surgery.' });
+      } else {
+        cards.push({ tone: 'warning', title: lang === 'zh' ? '人工复核' : 'Manual review', body: lang === 'zh' ? '当前 TNM 组合需人工复核，并结合影像、病理和临床状态做最终治疗决策。' : 'This TNM combination requires manual review together with imaging, pathology, and clinical status.' });
+      }
+
+      if (state.ns.driver === 'pending') {
+        cards.push({ title: lang === 'zh' ? '分子检测' : 'Molecular testing', body: lang === 'zh' ? `当前病理类型为 ${pathology}。正式流程中应尽快补齐 EGFR、ALK、ROS1、BRAF、KRAS、MET、RET、NTRK、HER2 及 PD-L1 等关键检测。` : `Current pathology is ${pathology}. Complete EGFR, ALK, ROS1, BRAF, KRAS, MET, RET, NTRK, HER2, and PD-L1 testing as part of the formal workup.` });
+      } else if (state.ns.driver !== 'none') {
+        cards.push({ title: lang === 'zh' ? '靶向路径' : 'Targeted pathway', body: lang === 'zh' ? `已知 ${driverText()} 异常，正式治疗应优先评估对应靶向治疗在围术期或晚期阶段中的适应证。` : `${driverText()} is already identified, so the corresponding targeted strategy should be formally evaluated in the perioperative or advanced setting.` });
+      } else {
+        cards.push({ title: lang === 'zh' ? '免疫 / 化疗路径' : 'Immunotherapy / chemotherapy pathway', body: lang === 'zh' ? `当前未见明确驱动基因，PD-L1（程序性死亡配体1）为 ${pdl1Text()}；正式方案中应据此评估免疫单药、免疫联合化疗或化疗方案。` : `No clear driver is detected and PD-L1 is ${pdl1Text()}, so formal treatment selection should consider monotherapy immunotherapy, chemo-immunotherapy, or chemotherapy.` });
+      }
+
+      if (Number(state.ns.ecog) >= 3) {
+        cards.push({ tone: 'warning', title: lang === 'zh' ? '体能状态修正' : 'Performance adjustment', body: lang === 'zh' ? '当前 ECOG PS 较差，应更加重视支持治疗、症状控制、营养评估以及治疗强度下调。' : 'Poor ECOG status should shift emphasis toward supportive care, symptom control, nutrition, and de-intensified treatment.' });
+      }
+      return renderPathCards(I18N[state.lang].planTitle, cards);
+    }
+
+    function nsFollow(stage) {
+      const lang = state.lang;
+      const items = [];
+      if (['0','IA1','IA2','IA3','IB','IIA'].includes(stage)) {
+        items.push({ time: lang === 'zh' ? '0–3 年' : '0–3 years', desc: lang === 'zh' ? '建议每 6 个月复诊 1 次，重点评估病史、体检和胸部 CT（计算机断层扫描）。' : 'Follow up every 6 months with history, physical exam, and chest CT.' });
+        items.push({ time: lang === 'zh' ? '3 年后' : 'After year 3', desc: lang === 'zh' ? '通常每年 1 次胸部 CT，并持续关注第二原发肺癌风险。' : 'Usually continue annual chest CT while watching for second primary lung cancer.' });
+        items.push({ time: lang === 'zh' ? '重点' : 'Focus', desc: lang === 'zh' ? '关注局部复发、术后肺功能恢复及治疗相关并发症。' : 'Watch for local recurrence, postoperative pulmonary recovery, and treatment-related complications.' });
+      } else if (['IIB','IIIA','IIIB','IIIC'].includes(stage)) {
+        items.push({ time: lang === 'zh' ? '0–3 年' : '0–3 years', desc: lang === 'zh' ? '建议每 3–6 个月复评 1 次，结合胸部 CT（计算机断层扫描）和必要时脑 MRI（磁共振）/ 上腹部影像。' : 'Reassess every 3–6 months using chest CT and brain / upper abdominal imaging when indicated.' });
+        items.push({ time: lang === 'zh' ? '3–5 年' : '3–5 years', desc: lang === 'zh' ? '可逐步改为每 6 个月左右，之后按病情稳定度进一步放宽。' : 'Intervals can often be widened to about every 6 months, then further individualized according to disease stability.' });
+        items.push({ time: lang === 'zh' ? '重点' : 'Focus', desc: lang === 'zh' ? '需同步关注放射性肺炎、食管损伤、免疫相关不良反应和残余病灶变化。' : 'Also monitor radiation pneumonitis, esophageal injury, immune-related toxicity, and residual disease changes.' });
+      } else if (['IVA','IVB'].includes(stage)) {
+        items.push({ time: lang === 'zh' ? '治疗中' : 'On treatment', desc: lang === 'zh' ? '常按 6–12 周进行一次影像疗效评估，频率与治疗周期、药物机制和病情变化同步调整。' : 'Imaging response assessment is commonly performed every 6–12 weeks and adjusted to treatment cycles, drug class, and disease dynamics.' });
+        items.push({ time: lang === 'zh' ? '稳定后' : 'After stabilization', desc: lang === 'zh' ? '继续按病灶部位和治疗方案个体化安排 CT（计算机断层扫描）/ MRI（磁共振），同时评估症状、器官功能和生活质量。' : 'Continue individualized CT / MRI scheduling while tracking symptoms, organ function, and quality of life.' });
+      } else {
+        items.push({ time: lang === 'zh' ? '人工复核' : 'Manual review', desc: lang === 'zh' ? '当前组合建议人工复核后再给出个体化随访频率。' : 'This combination should be manually reviewed before assigning individualized surveillance intervals.' });
+      }
+      items.push({ time: lang === 'zh' ? '专项' : 'Special', desc: lang === 'zh' ? '靶向治疗初期建议每 4–8 周评估疗效与不良反应；免疫治疗期间需常规监测甲状腺功能、肝功能、肾上腺、垂体及肺炎等免疫相关不良事件。' : 'Early during targeted therapy, reassess efficacy and toxicity every 4–8 weeks; during immunotherapy, routinely monitor thyroid, liver, adrenal, pituitary, and pneumonitis-related toxicities.' });
+      return renderTimeline(I18N[state.lang].followTitle, items);
+    }
+
+    function scPlan(stage, simple) {
+      const lang = state.lang;
+      const pathology = pathologyText('sc');
+      const cards = [];
+      if (simple === I18N[state.lang].limited) {
+        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '局限期 SCLC（小细胞肺癌）通常以同步放化疗为标准主线；极少数 very early（极早期）且可切除病例，可在 MDT（多学科团队）评估后讨论手术路径。' : 'Limited-stage SCLC is generally treated with concurrent chemoradiotherapy; only a very small subset of very early resectable cases may be considered for surgery after MDT review.' });
+        cards.push({ title: lang === 'zh' ? '关键补充' : 'Key addition', body: lang === 'zh' ? '对达到良好缓解且全身状态允许者，正式路径中应评估 PCI（预防性颅脑照射）以及胸部放疗整合策略。' : 'In patients with good response and suitable condition, the formal pathway should assess PCI and thoracic radiotherapy integration.' });
+      } else {
+        cards.push({ tone: 'primary', title: lang === 'zh' ? '首选治疗' : 'Preferred treatment', body: lang === 'zh' ? '广泛期 SCLC 多以含铂 + 依托泊苷 ± 免疫治疗为标准主线，根据症状和转移部位决定是否合并局部姑息治疗。' : 'Extensive-stage SCLC is commonly managed with platinum-etoposide ± immunotherapy, with local palliation added according to symptoms and metastatic sites.' });
+        cards.push({ title: lang === 'zh' ? '关键补充' : 'Key addition', body: lang === 'zh' ? '对症状性病灶、脑转移或胸部残余病灶，应评估姑息放疗、局部控制和支持治疗。' : 'Symptomatic lesions, brain metastases, or thoracic residual disease should prompt evaluation for palliative radiotherapy, local control, and supportive care.' });
+      }
+      cards.push({ title: lang === 'zh' ? '病理与分期' : 'Pathology and staging', body: lang === 'zh' ? `当前病理类型为 ${pathology}；当前 TNM 为 ${stage}，简化分期为 ${simple}。` : `Current pathology is ${pathology}; TNM stage is ${stage}, and the simplified stage is ${simple}.` });
+      cards.push({ title: lang === 'zh' ? '治疗前评估' : 'Pretreatment assessment', body: lang === 'zh' ? `脑 MRI（磁共振）为 ${brainText()}；症状负荷为 ${symptomText()}。正式路径中还应同步关注器官功能、骨髓储备和并发症风险。` : `Brain MRI is ${brainText()} and symptom burden is ${symptomText()}. Formal planning should also address organ function, marrow reserve, and complication risk.` });
+      if (Number(state.sc.ecog) >= 3) cards.push({ tone: 'warning', title: lang === 'zh' ? '体能状态修正' : 'Performance adjustment', body: lang === 'zh' ? 'ECOG PS 较差时，应进一步强化支持治疗、症状缓解和治疗强度个体化调整。' : 'Poor ECOG PS should increase emphasis on supportive care, symptom relief, and individualized treatment intensity.' });
+      return renderPathCards(I18N[state.lang].planTitle, cards);
+    }
+
+    function scFollow(simple) {
+      const lang = state.lang;
+      const items = [];
+      if (simple === I18N[state.lang].limited) {
+        items.push({ time: lang === 'zh' ? '0–2 年' : '0–2 years', desc: lang === 'zh' ? '建议每 3 个月左右评估 1 次，重点胸部 CT（计算机断层扫描）、症状变化和脑部复发风险。' : 'Reassess about every 3 months with chest CT, symptom review, and attention to brain relapse risk.' });
+        items.push({ time: lang === 'zh' ? '第 3 年后' : 'After year 3', desc: lang === 'zh' ? '可逐步改为每 6 个月，再往后按年评估。' : 'Follow-up can later be spaced to every 6 months and then yearly.' });
+      } else {
+        items.push({ time: lang === 'zh' ? '治疗中' : 'On treatment', desc: lang === 'zh' ? '通常每 2–3 个周期评估疗效；获得缓解或稳定后，继续密切追踪胸部和脑部病灶，并按治疗方案调整影像节奏。' : 'Efficacy is commonly assessed every 2–3 cycles; after response or stabilization, continue close thoracic and brain surveillance with imaging intervals adjusted to treatment.' });
+      }
+      items.push({ time: lang === 'zh' ? 'PCI 后' : 'After PCI', desc: lang === 'zh' ? '前 2 年建议每 3–6 个月进行神经系统症状评估，必要时加做脑 MRI（磁共振），之后每 6–12 个月复查。' : 'During the first 2 years, assess neurologic symptoms every 3–6 months and obtain brain MRI when clinically indicated; afterward, reassess every 6–12 months.' });
+      items.push({ time: lang === 'zh' ? '脑转移后' : 'After brain metastases', desc: lang === 'zh' ? '完成局部治疗后前 1 年建议每 2–3 个月复查脑 MRI（磁共振），其后每 3–6 个月评估一次，并结合胸部影像同步判断全身病情。' : 'In the first year after local therapy, brain MRI is commonly repeated every 2–3 months, then every 3–6 months together with thoracic disease assessment.' });
+      items.push({ time: lang === 'zh' ? '免疫治疗中' : 'During immunotherapy', desc: lang === 'zh' ? '建议每 2–3 个周期评估疗效，同时常规监测甲状腺功能、肝功能、肺炎表现及其他免疫相关不良反应。' : 'Reassess efficacy every 2–3 cycles while monitoring thyroid function, liver function, pneumonitis signals, and other immune-related toxicities.' });
+      return renderTimeline(I18N[state.lang].followTitle, items);
+    }
+
+    function renderField(field, side) {
+      const lang = state.lang;
+      const wrap = document.createElement('div');
+      wrap.className = 'field' + (field.full ? ' full' : '');
+      const label = document.createElement('label');
+      label.textContent = field.label[lang];
+      wrap.appendChild(label);
+
+      if (field.type === 'select') {
+        const select = document.createElement('select');
+        select.value = state[side][field.id] ?? '';
+        field.options.forEach(opt => {
+          const option = document.createElement('option');
+          option.value = opt.value;
+          option.textContent = opt[lang];
+          if ((state[side][field.id] ?? '') === opt.value) option.selected = true;
+          select.appendChild(option);
+        });
+        select.addEventListener('change', e => {
+          state[side][field.id] = e.target.value;
+          renderDynamic();
+        });
+        wrap.appendChild(select);
+      } else if (field.type === 'number') {
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.min = field.min;
+        input.max = field.max;
+        input.step = field.step;
+        input.value = state[side][field.id];
+        input.addEventListener('input', e => {
+          state[side][field.id] = Number(e.target.value || 0);
+          renderDynamic();
+        });
+        wrap.appendChild(input);
+      } else if (field.type === 'chips') {
+        const chips = document.createElement('div');
+        chips.className = 'chips';
+        field.chips.forEach(item => {
+          const chip = document.createElement('div');
+          chip.className = 'chip';
+          chip.textContent = item[lang];
+          chips.appendChild(chip);
+        });
+        wrap.appendChild(chips);
+      }
+
+      if (field.hint) {
+        const hint = document.createElement('div');
+        hint.className = 'hint';
+        hint.textContent = field.hint[lang];
+        wrap.appendChild(hint);
+      }
+      return wrap;
+    }
+
+    function renderSections(containerId, schema, side) {
+      const container = $(containerId);
+      container.innerHTML = '';
+      schema.forEach(section => {
+        const sec = document.createElement('details');
+        sec.className = 'section-block';
+        sec.open = true;
+        const summary = document.createElement('summary');
+        summary.className = 'section-summary';
+        summary.innerHTML = `<span>${I18N[state.lang].sectionTitles[section.key]}</span><span class="section-toggle">${state.lang === 'zh' ? '点击展开 / 收起' : 'Click to expand / collapse'}</span>`;
+        sec.appendChild(summary);
+        const body = document.createElement('div');
+        body.className = 'section-body';
+        const grid = document.createElement('div');
+        grid.className = 'form-grid';
+        section.fields.forEach(field => grid.appendChild(renderField(field, side)));
+        body.appendChild(grid);
+        sec.appendChild(body);
+        container.appendChild(sec);
+      });
+    }
+
+    function renderStatic() {
+      const t = I18N[state.lang];
+      document.documentElement.lang = state.lang === 'zh' ? 'zh-CN' : 'en';
+      document.title = state.lang === 'zh' ? '肺癌分期系统 · 正式双语版' : 'Lung Cancer Staging System · Production Bilingual Edition';
+      $('heroBadge').textContent = t.heroBadge;
+      $('printBtn').textContent = t.printButton;
+      $('langSwitch').textContent = t.langButton;
+      $('heroTitle').textContent = t.heroTitle;
+      $('heroSubtitle').textContent = t.heroSubtitle;
+      $('tabNsclc').textContent = t.tabNsclc;
+      $('tabSclc').textContent = t.tabSclc;
+      $('nsPanelTitle').textContent = t.nsPanelTitle;
+      $('scPanelTitle').textContent = t.scPanelTitle;
+      $('nsResultTag').textContent = t.nsResultTag;
+      $('scResultTag').textContent = t.scResultTag;
+      $('metricT').textContent = t.metricT;
+      $('metricN').textContent = t.metricN;
+      $('metricM').textContent = t.metricM;
+      $('metricResect').textContent = t.metricResect;
+      $('scMetricT').textContent = t.metricT;
+      $('scMetricN').textContent = t.metricN;
+      $('scMetricM').textContent = t.metricM;
+      $('scMetricSimple').textContent = t.scMetricSimple;
+      $('refsTitle').textContent = t.refsTitle;
+      $('footerText').textContent = t.footerText;
+
+      const infoGrid = $('infoGrid');
+      infoGrid.innerHTML = '';
+      t.infoCards.forEach(card => {
+        const el = document.createElement('div');
+        el.className = 'info-card';
+        el.innerHTML = `<h3>${card.title}</h3><p>${card.body}</p>`;
+        infoGrid.appendChild(el);
+      });
+
+      const refsList = $('refsList');
+      refsList.innerHTML = '';
+      REFERENCES.forEach(ref => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="${ref.url}" target="_blank">${ref[state.lang]}</a>`;
+        refsList.appendChild(li);
+      });
+
+      renderSections('nsSections', NS_SCHEMA, 'ns');
+      renderSections('scSections', SC_SCHEMA, 'sc');
+      renderDynamic();
+    }
+
+    function renderDynamic() {
+      const t = I18N[state.lang];
+      const nsT = calcT(state.ns);
+      const nsStage = computeStage(nsT.t, state.ns.n, state.ns.m);
+      const nsSeverity = stageSeverity(nsStage);
+      $('nsStage').textContent = nsStage;
+      $('nsSummary').innerHTML = t.nsSummary(basisText('ns'), nsT.t, state.ns.n, state.ns.m, nsStage);
+      $('nsTValue').textContent = nsT.t;
+      $('nsNValue').textContent = state.ns.n;
+      $('nsMValue').textContent = state.ns.m;
+      $('nsResectValue').textContent = resectText();
+      $('nsSeverityChip').textContent = t.severityLabels[nsSeverity];
+      $('nsResultCard').className = `result-card stage-severity-${nsSeverity}`;
+      $('nsReason').innerHTML = `<h3>${t.tReasonTitle}</h3>${nsT.reason}<br><br>${t.nsUpgradeNote}`;
+      $('nsPlan').innerHTML = nsPlan(nsStage);
+      $('nsFollow').innerHTML = nsFollow(nsStage);
+      renderSummaryStrip('nsCaseSummary', [
+        { label: t.summaryLabels.pathology, value: pathologyText('ns') },
+        { label: t.summaryLabels.basis, value: basisText('ns') },
+        { label: t.summaryLabels.stage, value: nsStage },
+        { label: t.summaryLabels.ecog, value: state.ns.ecog },
+        { label: t.summaryLabels.driver, value: driverText() },
+        { label: t.summaryLabels.pdl1, value: pdl1Text() }
+      ]);
+
+      const scT = calcT(state.sc);
+      const scStage = computeStage(scT.t, state.sc.n, state.sc.m);
+      const simple = simpleSclcStage();
+      const scSeverity = stageSeverity(scStage);
+      $('scStage').textContent = scStage;
+      $('scSummary').innerHTML = t.scSummary(basisText('sc'), scT.t, state.sc.n, state.sc.m, scStage, simple);
+      $('scTValue').textContent = scT.t;
+      $('scNValue').textContent = state.sc.n;
+      $('scMValue').textContent = state.sc.m;
+      $('scSimpleValue').textContent = simple;
+      $('scSeverityChip').textContent = t.severityLabels[scSeverity];
+      $('scResultCard').className = `result-card stage-severity-${scSeverity}`;
+      $('scReason').innerHTML = `<h3>${t.tReasonTitle}</h3>${scT.reason}<br><br>${t.scUpgradeNote}`;
+      $('scPlan').innerHTML = scPlan(scStage, simple);
+      $('scFollow').innerHTML = scFollow(simple);
+      renderSummaryStrip('scCaseSummary', [
+        { label: t.summaryLabels.pathology, value: pathologyText('sc') },
+        { label: t.summaryLabels.basis, value: basisText('sc') },
+        { label: t.summaryLabels.stage, value: scStage },
+        { label: t.summaryLabels.simple, value: simple },
+        { label: t.summaryLabels.ecog, value: state.sc.ecog },
+        { label: t.summaryLabels.brain, value: brainText() }
+      ]);
+    }
+
+    $('langSwitch').addEventListener('click', () => {
+      state.lang = state.lang === 'zh' ? 'en' : 'zh';
+      localStorage.setItem('lung-staging-lang', state.lang);
+      renderStatic();
+    });
+
+    $('printBtn').addEventListener('click', () => {
+      window.print();
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.tab = btn.dataset.tab;
+        document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+        document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(`page-${state.tab}`).classList.add('active');
+      });
+    });
+
+    renderStatic();
+  </script>
+</body>
+</html>

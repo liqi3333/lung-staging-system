@@ -1,0 +1,9 @@
+{
+  "name": "lung-cancer-staging-system",
+  "version": "1.1.0",
+  "description": "Bilingual single-file lung cancer staging system for NSCLC/SCLC | NSCLC/SCLC 双语单文件肺癌分期系统",
+  "private": true,
+  "scripts": {
+    "build:html": "node scripts/build-html-release.js"
+  }
+}
